@@ -1,13 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
-namespace Tetris
-{
     public class Tetris : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+         [STAThread]
+
+         static void Main()
+         {
+            Tetris game = new Tetris();
+            game.Run();
+         }
 
         public Tetris()
         {
@@ -49,4 +56,3 @@ namespace Tetris
             base.Draw(gameTime);
         }
     }
-}
