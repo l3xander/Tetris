@@ -36,13 +36,15 @@ using System;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             roboto = Content.Load<SpriteFont>("Roboto");
+            robotoBold = Content.Load<SpriteFont>("RobotoBold");
 
-            // continue when background sprite or format has been decided on
-            // the 1.3f adds room for score text
-            // _graphics.PreferredBackBufferWidth = background.Width * 1.3f;
-            // _graphics.PreferredBackBufferHeight = background.Height;
 
-            _graphics.ApplyChanges();
+        // continue when background sprite or format has been decided on
+        // the 1.3f adds room for score text
+        // _graphics.PreferredBackBufferWidth = background.Width * 1.3f;
+        // _graphics.PreferredBackBufferHeight = background.Height;
+
+        _graphics.ApplyChanges();
         }
 
         protected override void Update(GameTime gameTime)
@@ -58,13 +60,6 @@ using System;
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // the next code is from the monogame docs, testing to see if font works
-            _spriteBatch.Begin();
-            // Places text in center of the screen
-            Vector2 position = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
-            _spriteBatch.DrawString(roboto, "MonoGame Font Test", position, Color.White, 0, position, 1.0f, SpriteEffects.None, 0.5f);
-            _spriteBatch.End();
 
             base.Draw(gameTime);
 

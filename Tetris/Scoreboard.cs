@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Xna.Framework.Graphics;
+
 internal class Scoreboard
 {
     int level, score;
@@ -20,6 +22,8 @@ internal class Scoreboard
 
     public void Draw()
     {
+       // code for drawing text
+       // _spriteBatch.DrawString(robotoBold, "MonoGame Font Test", position, Color.White, 0, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0.5f);
 
     }
 
