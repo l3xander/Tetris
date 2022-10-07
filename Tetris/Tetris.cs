@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Tetris
 {
@@ -8,6 +9,7 @@ namespace Tetris
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        SpriteFont roboto, robotoBold;
 
         public Tetris()
         {
@@ -27,7 +29,14 @@ namespace Tetris
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            roboto = Content.Load<SpriteFont>("Roboto");
+
+            // continue when background sprite or format has been decided on
+            // the 1.3f adds room for score text
+            // _graphics.PreferredBackBufferWidth = background.Width * 1.3f;
+            // _graphics.PreferredBackBufferHeight = background.Height;
+
+            _graphics.ApplyChanges();
         }
 
         protected override void Update(GameTime gameTime)
@@ -44,9 +53,16 @@ namespace Tetris
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            // the next code is from the monogame docs, testing to see if font works
+            _spriteBatch.Begin();
+            // Places text in center of the screen
+            Vector2 position = new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
+            _spriteBatch.DrawString(roboto, "MonoGame Font Test", position, Color.White, 0, position, 1.0f, SpriteEffects.None, 0.5f);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
+
+            // end of project: decide if we want the window to adapt to screen size or keep a set format
         }
     }
 }
