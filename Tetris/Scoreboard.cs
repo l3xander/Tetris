@@ -1,6 +1,33 @@
 ﻿
-    internal class Scoreboard
+internal class Scoreboard
+{
+    int level, score;
+    
+    public Scoreboard()
     {
-     //test
+
     }
+
+    public int LevelUp()
+    {
+        return level;
+    }
+
+    public int Score()
+    {
+        return score;
+    }
+
+    public void Draw()
+    {
+
+    }
+
+    public void Reset()
+    {
+        level = 0;
+        score = 0;
+    }
+    
+}
 
