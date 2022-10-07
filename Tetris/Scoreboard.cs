@@ -20,11 +20,10 @@ internal class Scoreboard
         return score;
     }
 
-    public void Draw()
+    public void Draw(SpriteFont roboto, SpriteFont robotoBold, SpriteFont Silkscreen)
     {
        // code for drawing text
        // _spriteBatch.DrawString(robotoBold, "MonoGame Font Test", position, Color.White, 0, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0.5f);
-
     }
 
     public void Reset()

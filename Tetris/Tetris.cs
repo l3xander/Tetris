@@ -7,7 +7,7 @@ using System;
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        SpriteFont roboto, robotoBold;
+        SpriteFont roboto, robotoBold, silkscreen;
 
          [STAThread]
 
@@ -37,6 +37,8 @@ using System;
 
             roboto = Content.Load<SpriteFont>("Roboto");
             robotoBold = Content.Load<SpriteFont>("RobotoBold");
+            silkscreen = Content.Load<SpriteFont>("Silkscreen");
+
 
 
         // continue when background sprite or format has been decided on
@@ -61,8 +63,11 @@ using System;
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            base.Draw(gameTime);
+            _spriteBatch.Begin();
+             // Scoreboard.Draw(roboto, robotoBold, silkscreen);
+            _spriteBatch.End();
 
+            base.Draw(gameTime);
             // end of project: decide if we want the window to adapt to screen size or keep a set format
         }
     }
