@@ -1,15 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using static System.Net.Mime.MediaTypeNames;
+using System;
 
-namespace Tetris
-{
     public class Tetris : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         SpriteFont roboto, robotoBold;
+
+         [STAThread]
+
+         static void Main()
+         {
+            Tetris game = new Tetris();
+            game.Run();
+         }
 
         public Tetris()
         {
@@ -65,4 +71,3 @@ namespace Tetris
             // end of project: decide if we want the window to adapt to screen size or keep a set format
         }
     }
-}
