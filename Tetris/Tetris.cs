@@ -7,6 +7,7 @@ using System;
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        Texture2D block;
         SpriteFont roboto, robotoBold, silkscreen;
 
          [STAThread]
@@ -34,13 +35,11 @@ using System;
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            block = Content.Load<Texture2D>("block");
             roboto = Content.Load<SpriteFont>("Roboto");
             robotoBold = Content.Load<SpriteFont>("RobotoBold");
             silkscreen = Content.Load<SpriteFont>("Silkscreen");
-
-
-
+            
         // continue when background sprite or format has been decided on
         // the 1.3f adds room for score text
         // _graphics.PreferredBackBufferWidth = background.Width * 1.3f;
@@ -64,6 +63,7 @@ using System;
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
+             // grid.Draw(block);
              // Scoreboard.Draw(roboto, robotoBold, silkscreen);
             _spriteBatch.End();
 
