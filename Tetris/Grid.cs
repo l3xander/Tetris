@@ -83,7 +83,7 @@ internal class Grid
             }
         }
     }
-    public void IsFull()
+    public void IsLost()
     {
        
     }
