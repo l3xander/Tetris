@@ -28,7 +28,7 @@ internal class Scoreboard
 
     public void Reset()
     {
-        level = 0;
+        level = 1;
         score = 0;
     }
     
