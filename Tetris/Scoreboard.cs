@@ -7,7 +7,7 @@ internal class Scoreboard
     
     public Scoreboard()
     {
-
+        // voor level: switch function?
     }
 
     public int LevelUp()
@@ -25,6 +25,8 @@ internal class Scoreboard
        // code for drawing text
        // _spriteBatch.DrawString(robotoBold, "MonoGame Font Test", position, Color.White, 0, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0.5f);
     }
+
+    // todo: levels extra speed
 
     public void Reset()
     {

@@ -16,7 +16,7 @@ internal class Grid
     }
     public void Update()
     {
-
+        // todo: game states
     }
     public void RemoveLine()
     {
@@ -85,7 +85,18 @@ internal class Grid
     }
     public void IsLost()
     {
-       
+       // check: het moet niet "true" blokjes meetellen van blokken die nog vallen
+       //        alleen van placed blokken (dit zou automatisch goed moeten gaan maar wie weet)
+
+            for (int x = 0; x <= gridWidth; x++)
+            {
+                if (grid[x, gridHeight])
+                {
+                    // gamestate = lost
+                    // zeg iets tegen het scoreboard
+                }
+            }
+        }
     }
-}
+
 
