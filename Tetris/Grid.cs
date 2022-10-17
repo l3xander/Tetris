@@ -53,6 +53,8 @@ internal class Grid
                 {
                     grid[xCopy, 0] = false;
                 }
+
+                // points += 100;
             }
         }
         // todo: communicate this to scoreboard
@@ -85,10 +87,7 @@ internal class Grid
     }
     public void IsLost()
     {
-       // check: het moet niet "true" blokjes meetellen van blokken die nog vallen
-       //        alleen van placed blokken (dit zou automatisch goed moeten gaan maar wie weet)
-
-            for (int x = 0; x <= gridWidth; x++)
+             for (int x = 0; x <= gridWidth; x++)
             {
                 if (grid[x, gridHeight])
                 {
@@ -98,5 +97,4 @@ internal class Grid
             }
         }
     }
-
 
