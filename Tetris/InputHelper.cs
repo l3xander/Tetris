@@ -7,10 +7,6 @@ internal class InputHelper
     MouseState currentMouseState, previousMouseState;
     KeyboardState currentKeyboardState, previousKeyboardState;
 
-    public InputHelper()
-    {
-
-    }
 
     public void Update(GameTime gameTime)
     {

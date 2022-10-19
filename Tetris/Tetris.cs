@@ -17,21 +17,23 @@ public class Tetris : Game
 
     static void Main()
     {
-    Tetris game = new Tetris();
-    game.Run();
+        Tetris game = new Tetris();
+        game.Run();
     }
 
     public Tetris()
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
+        IsMouseVisible = false;
     }
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
+        // window size
+        graphics.PreferredBackBufferWidth = 696;
+        graphics.PreferredBackBufferHeight = 580;
+        graphics.ApplyChanges();
         base.Initialize();
     }
 
@@ -72,6 +74,7 @@ public class Tetris : Game
     {
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin();
+        spriteBatch.Draw(sblock, new Vector2(12*sblock.Width, 240), Color.Red);
         currentBlock.Draw(spriteBatch);
         spriteBatch.End();
         base.Draw(gameTime);
@@ -89,6 +92,6 @@ public class Tetris : Game
         allBlocks[5] = new BlockI(sblock);
         allBlocks[6] = new BlockO(sblock);
 
-        return allBlocks[r.Next(6)];
+        return allBlocks[r.Next(7)];
     }
 }
