@@ -7,7 +7,7 @@ internal class Grid
 {
     const int gridWidth = 12;
     const int gridHeight = 20;
-    bool[,] grid;
+    public bool[,] grid { get; private set; }
 
     public Grid()
     {
@@ -54,7 +54,7 @@ internal class Grid
                     grid[xCopy, 0] = false;
                 }
 
-                // points += 100;
+                //ScoreUp(100);
             }
         }
         // todo: communicate this to scoreboard

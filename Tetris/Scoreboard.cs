@@ -4,22 +4,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 internal class Scoreboard
 {
-    int level, score, scoreAdd;
+    int level, score;
     float scoreMod;
 
-    // speed modifier for block movement:
-    public float speedMod { get; private set; }
-
-    public enum gameState {start, ongoing, end};
-
-    public Scoreboard(int points)
+    // speed for block movement:
+    public float speed { get; private set; }
+    public Scoreboard()
     {
         scoreMod = 1;
-        scoreAdd = points;
         // to-do: score goes up based on block movement
     }
 
-    public int LevelUp()
+    public void LevelCheck()
     {
         // to-do: which values are we using for score to level?
         if (score == 0)
@@ -30,34 +26,33 @@ internal class Scoreboard
         {
             level = 2;
             scoreMod = 1.2f;
-            //speedMod =
+            // speed =
         }
         else if (score > 100 && score <= 250)
         {
             level = 3;
             scoreMod = 1.4f;
-            //speedMod =
+            //speed =
         }
         else if (score > 250 && score <= 400)
         {
             level = 4;
             scoreMod = 1.6f;
-            //speedMod =
+            //speed =
         }
         else if (score > 400)
         {
             level = 5;
             scoreMod = 2;
-            //speedMod =
+            //speed =
         }
-
-        return level;
     }
 
-    public int Score()
+    public int ScoreUp(int scoreAdd)
     {
         // generates new score based on level
         score += (int)Math.Round(scoreAdd * scoreMod);
+        LevelCheck();
 
         return score;
     }

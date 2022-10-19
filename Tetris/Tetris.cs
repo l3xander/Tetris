@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
 using System;
 
@@ -47,6 +48,7 @@ public class Tetris : Game
         roboto = Content.Load<SpriteFont>("Roboto");
         robotoBold = Content.Load<SpriteFont>("RobotoBold");
         silkscreen = Content.Load<SpriteFont>("Silkscreen");
+        music = Content.Load<Song>("tetrismusic");
 
         //if(block gets put down)
         //{

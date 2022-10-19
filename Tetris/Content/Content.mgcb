@@ -46,3 +46,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Silkscreen.spritefont
 
+#begin tetrismusic.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:tetrismusic.mp3
+
