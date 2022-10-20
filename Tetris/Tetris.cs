@@ -8,11 +8,13 @@ public class Tetris : Game
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     private InputHelper inputHelper;
-    private Texture2D sblock;
+    private Texture2D sblock, titleScreen;
     private Block[] allBlocks;
     SpriteFont roboto, robotoBold, silkscreen;
-
+    enum Gamestates {welcome, play, lost};
+    Gamestates currentState;
     Block nextBlock, currentBlock;
+    double currentSpeed;
 
     [STAThread]
 
@@ -23,17 +25,19 @@ public class Tetris : Game
     }
 
     public Tetris()
-    {
+    {        
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = false;
+        //sets the current gameplay state to play (will be changed to welcome once we have a welcome screen!!)
+        currentState = Gamestates.play;
     }
 
     protected override void Initialize()
     {
         // window size
-        graphics.PreferredBackBufferWidth = 696;
-        graphics.PreferredBackBufferHeight = 580;
+        graphics.PreferredBackBufferWidth = 30*24;
+        graphics.PreferredBackBufferHeight = 30*20;
         graphics.ApplyChanges();
         base.Initialize();
     }
@@ -43,18 +47,13 @@ public class Tetris : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
         inputHelper = new InputHelper();
         sblock = Content.Load<Texture2D>("block");
-        nextBlock = randomBlock();
+        currentSpeed = 2;
+        nextBlock = randomBlock(currentSpeed);
         currentBlock = nextBlock;
 
         roboto = Content.Load<SpriteFont>("Roboto");
         robotoBold = Content.Load<SpriteFont>("RobotoBold");
         silkscreen = Content.Load<SpriteFont>("Silkscreen");
-
-        //if(block gets put down)
-        //{
-        //    currentBlock = nextBlock;    
-        //    nextBlock = randomBlock();
-        //}
 
         // continue this later: making screen size bigger
         // so both the game world and the scoreboard are visible
@@ -69,38 +68,48 @@ public class Tetris : Game
 
         // TODO: Add your update logic here
         
-        if (inputHelper.KeyPressed(Keys.Right))
+        //executes everything when game is in play mode
+        if (currentState == Gamestates.play)
         {
-            currentBlock.rotateRight();
-        }
-        currentBlock.Move(gameTime, inputHelper, graphics);
+            
+            if (!currentBlock.finished) currentBlock.Move(gameTime, inputHelper, graphics);
+            else
+            {
+                currentBlock = nextBlock;
+                nextBlock = randomBlock(currentSpeed);
+            }
 
+        }
         base.Update(gameTime);
+
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin();
-        // grid.Draw("block");
+
         spriteBatch.Draw(sblock, new Vector2(12*sblock.Width, 240), Color.Red);
+
+        // grid.Draw("block");
+
         currentBlock.Draw(spriteBatch);
         // Scoreboard.Draw(roboto, robotoBold, silkscreen);
         spriteBatch.End();
         base.Draw(gameTime);
     }
 
-    private Block randomBlock()
+    private Block randomBlock(double pSpeed)
     {
         Random r = new Random();
         allBlocks = new Block[7];
-        allBlocks[0] = new BlockL(sblock);
-        allBlocks[1] = new BlockR(sblock);
-        allBlocks[2] = new BlockS(sblock);
-        allBlocks[3] = new BlockT(sblock);
-        allBlocks[4] = new Block2(sblock);
-        allBlocks[5] = new BlockI(sblock);
-        allBlocks[6] = new BlockO(sblock);
+        allBlocks[0] = new BlockL(sblock, pSpeed);
+        allBlocks[1] = new BlockR(sblock, pSpeed);
+        allBlocks[2] = new BlockS(sblock, pSpeed);
+        allBlocks[3] = new BlockT(sblock, pSpeed);
+        allBlocks[4] = new Block2(sblock, pSpeed);
+        allBlocks[5] = new BlockI(sblock, pSpeed);
+        allBlocks[6] = new BlockO(sblock, pSpeed);
 
         return allBlocks[r.Next(7)];
     }

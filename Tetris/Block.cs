@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+//using System.Windows.Forms;
 
 internal class Block
 {
@@ -12,30 +13,15 @@ internal class Block
     protected Color color;
     protected Vector2 pos;
     protected double timer, speed;
+    public bool finished;
 
-    public Block(Texture2D sprite)
+    public Block(Texture2D sprite, double pspeed)
     {
         spBlock = sprite;
-        pos = new Vector2 (0, 0);
-        singleSize = spBlock.Width;
-        speed = 1.5;
-    }
-
-    public void rotateRight()
-    {
-        //rotate block
-
-        bool[,] temp = new bool[size,size];
-
-        for(int i = 0; i < size; i++) 
-        { 
-            for(int j = 0; j < size; j++)
-            {
-                temp[size-1-j,i] = array[i,j];
-            }
-        }
-        array = temp;
-        
+        singleSize = spBlock.Width;        
+        pos = new Vector2 (singleSize, 0);
+        speed = pspeed;
+        finished = false;
     }
 
     public void Draw(SpriteBatch spBatch)
@@ -49,6 +35,7 @@ internal class Block
         }
     }
 
+    //handles all movement; input and automatic downward moving
     public void Move(GameTime gameTime, InputHelper ip, GraphicsDeviceManager gr)
     {
         timer += gameTime.ElapsedGameTime.TotalSeconds; 
@@ -59,71 +46,143 @@ internal class Block
             timer = 0;
         }
 
-        if (ip.KeyPressed(Keys.D) && this.IsWithinlimitsRight())
+        if (ip.KeyPressed(Keys.D) && this.IsWithinlimits(Keys.D, pos.X + singleSize))
         {
             pos.X += singleSize;
         }
 
-        if (ip.KeyPressed(Keys.A) && this.IsWithinlimitsLeft())
+        if (ip.KeyPressed(Keys.A) && this.IsWithinlimits(Keys.A, pos.X-singleSize))
         {
             pos.X -= singleSize;
+        }
+        if (ip.KeyPressed(Keys.Right) && this.IsWithinlimits(Keys.Right, pos.X))
+        {
+            this.rotateRight();
+        }
+        if (ip.KeyPressed(Keys.Left) && this.IsWithinlimits(Keys.Left, pos.X))
+        {
+            this.rotateLeft();
         }
 
         if (timer > speed)
         {
             pos.Y += singleSize;
             timer = 0;
-        }        
+        }
+    }
+    public void rotateRight()
+    {
+        //rotate block
+
+        bool[,] temp = new bool[size,size];
+
+        for(int i = 0; i < size; i++) 
+        { 
+            for(int j = 0; j < size; j++)
+            {
+                temp[size-1-j,i] = array[i,j];
+            }
+        }
+        array = temp;        
     }
 
-    private bool IsWithinlimitsLeft()
+    public void rotateLeft()
     {
+        //rotate block
+
+        bool[,] temp = new bool[size, size];
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                temp[i,j] = array[size - 1 - j, i];
+            }
+        }
+        array = temp;
+    }
+
+
+
+    //checks if action a player wants to perform is within the grid, based on key being pressed & and the new x pos of the block
+    private bool IsWithinlimits(Keys k, float xPos)
+    {        
+        
+        if (k == Keys.A || k == Keys.D) 
+        { 
         int limitL = 0;
-
-        //when the first few rows in the arrays are empty they can go outside the screen
-        for (int i = 0; i < size - 1; i++)
-        {
-            for (int j = 0; j < size; j++)
+        int limitR = 12 * spBlock.Width - size * singleSize;
+            //when the first few rows in the arrays are empty they can go outside the screen
+            for (int i = 0; i < size - 1; i++)
             {
-                if (array[i, j] == true)
+                for (int j = 0; j < size; j++)
                 {
-                    i = size;
-                    break;
+                    if (array[i, j])
+                    {
+                        i = size;
+                        break;
+                    }
                 }
+                if (i == size) break;
+                limitL -= singleSize;
             }
-            if (i == size) break;
-            limitL -= singleSize;
-        }
-        return ((pos.X - singleSize) >= limitL);
+            for (int i = size - 1; i > 0; i--)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (array[i, j])
+                    {
+                        i = 0;
+                        break;
+                    }
+                }
+                if (i == 0) break;
+                limitR += singleSize;
+            }
 
+            return (xPos <= limitR && xPos >= limitL);
+        }
+
+        if (k == Keys.Right)
+        {
+            this.rotateRight();
+            if (!IsWithinlimits(Keys.D, pos.X))  
+            {
+                rotateLeft();
+                return false;
+            }
+            rotateLeft();
+            return true;
+        }
+
+        if (k == Keys.Left)
+        {
+            this.rotateLeft();
+            if (!IsWithinlimits(Keys.D, pos.X))
+            {
+                rotateRight();
+                return false;
+            }
+            rotateRight();
+            return true; 
+
+        }
+
+        else return false;
     }
 
-    private bool IsWithinlimitsRight()
+    public void finish(Grid pgrid)
     {
-        int limitR = 12*spBlock.Width - singleSize * size;
-        for (int i = size; i < 1; i--)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                if (array[i, j] == true)
-                {
-                    i = size;
-                    break;
-                }
-            }
-            if (i == size) break;
-            limitR += singleSize;
-        }
-
-        return ((pos.X + singleSize) <= limitR);
+        finished = true;
     }
+
 
 }
 
 class BlockL : Block
 {   
-    public BlockL(Texture2D sprite)
-        : base(sprite)
+    public BlockL(Texture2D sprite, double pspeed)
+        : base(sprite, pspeed)
     {
         size = 4;
         array = new bool[size, size];
@@ -141,13 +200,13 @@ class BlockL : Block
 
 class BlockR : Block
 {
-    public BlockR(Texture2D sprite)
-        : base(sprite)
+    public BlockR(Texture2D sprite, double pspeed)
+        : base(sprite, pspeed)
     {
         size = 4;
         array = new bool[size, size];
         color = Color.BlueViolet;
-        //fill Array with block, dependent on type
+        
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -161,17 +220,17 @@ class BlockR : Block
 
 class BlockI : Block
 {
-    public BlockI(Texture2D sprite)
-        : base(sprite)
+    public BlockI(Texture2D sprite, double pspeed)
+        : base(sprite, pspeed)
     {
         size = 4;
         array = new bool[size, size];
         color = Color.BlueViolet;
-        //fill Array with block, dependent on type
+        
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
-                if (j == 0) array[i, j] = true;
+                if (j == 1) array[i, j] = true;
                 else array[i, j] = false;
         }
     }
@@ -179,8 +238,8 @@ class BlockI : Block
 
 class BlockO : Block
 {
-    public BlockO(Texture2D sprite)
-            : base(sprite)
+    public BlockO(Texture2D sprite, double pspeed)
+            : base(sprite, pspeed)
     {
         size = 2;
         array = new bool[size, size];
@@ -198,12 +257,13 @@ class BlockO : Block
 
 class BlockS : Block
 {
-    public BlockS(Texture2D sprite)
-    : base(sprite)
+    public BlockS(Texture2D sprite, double pspeed)
+    : base(sprite, pspeed)
     {
         size = 3;
         array = new bool[size, size];
         color = Color.BlueViolet;
+
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -215,12 +275,13 @@ class BlockS : Block
 
 class Block2 : Block
 {
-    public Block2(Texture2D sprite)
-    : base(sprite)
+    public Block2(Texture2D sprite, double pspeed)
+    : base(sprite, pspeed)
     {
         size = 3;
         array = new bool[size, size];
         color = Color.BlueViolet;
+
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -232,12 +293,13 @@ class Block2 : Block
 
 class BlockT : Block
 {
-    public BlockT(Texture2D sprite)
-    : base(sprite)
+    public BlockT(Texture2D sprite, double pspeed)
+    : base(sprite, pspeed)
     {
         size = 3;
         array = new bool[size, size];
         color = Color.BlueViolet;
+
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
