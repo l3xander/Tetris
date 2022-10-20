@@ -16,7 +16,7 @@ internal class Grid
     }
     public void Update()
     {
-
+        // todo: game states
     }
     public void RemoveLine()
     {
@@ -53,6 +53,8 @@ internal class Grid
                 {
                     grid[xCopy, 0] = false;
                 }
+
+                // points += 100;
             }
         }
         // todo: communicate this to scoreboard
@@ -85,7 +87,14 @@ internal class Grid
     }
     public void IsLost()
     {
-       
+             for (int x = 0; x <= gridWidth; x++)
+            {
+                if (grid[x, gridHeight])
+                {
+                    // gamestate = lost
+                    // zeg iets tegen het scoreboard
+                }
+            }
+        }
     }
-}
 

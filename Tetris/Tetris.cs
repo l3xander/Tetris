@@ -10,6 +10,7 @@ public class Tetris : Game
     private InputHelper inputHelper;
     private Texture2D sblock;
     private Block[] allBlocks;
+    SpriteFont roboto, robotoBold, silkscreen;
 
     Block nextBlock, currentBlock;
 
@@ -44,13 +45,20 @@ public class Tetris : Game
         sblock = Content.Load<Texture2D>("block");
         nextBlock = randomBlock();
         currentBlock = nextBlock;
+
+        roboto = Content.Load<SpriteFont>("Roboto");
+        robotoBold = Content.Load<SpriteFont>("RobotoBold");
+        silkscreen = Content.Load<SpriteFont>("Silkscreen");
+
         //if(block gets put down)
         //{
         //    currentBlock = nextBlock;    
         //    nextBlock = randomBlock();
         //}
 
-        // TODO: use this.Content to load your game content here
+        // continue this later: making screen size bigger
+        // so both the game world and the scoreboard are visible
+        // graphics.PreferredBackBufferWidth = grid.Width * 1.3f;
     }
 
     protected override void Update(GameTime gameTime)
@@ -74,8 +82,10 @@ public class Tetris : Game
     {
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin();
+        // grid.Draw("block");
         spriteBatch.Draw(sblock, new Vector2(12*sblock.Width, 240), Color.Red);
         currentBlock.Draw(spriteBatch);
+        // Scoreboard.Draw(roboto, robotoBold, silkscreen);
         spriteBatch.End();
         base.Draw(gameTime);
     }
