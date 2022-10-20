@@ -6,6 +6,7 @@ internal class Scoreboard
 {
     int level, score;
     float scoreMod;
+    public bool scoreCheck { get; private set; }
 
     // speed for block movement:
     public float speed { get; private set; }
@@ -18,6 +19,7 @@ internal class Scoreboard
     public void LevelCheck()
     {
         // to-do: which values are we using for score to level?
+        scoreCheck = false;
         if (score == 0)
         {
             level = 1;
@@ -52,6 +54,7 @@ internal class Scoreboard
     {
         // generates new score based on level
         score += (int)Math.Round(scoreAdd * scoreMod);
+        scoreCheck = true;
         LevelCheck();
 
         return score;
