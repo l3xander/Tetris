@@ -47,7 +47,7 @@ public class Tetris : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
         inputHelper = new InputHelper();
-        sblock = Content.Load<Texture2D>("block");
+        sblock = Content.Load<Texture2D>("sprite");
         currentSpeed = 2;
         nextBlock = randomBlock(currentSpeed);
         currentBlock = nextBlock;

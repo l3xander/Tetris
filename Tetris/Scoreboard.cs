@@ -19,7 +19,6 @@ internal class Scoreboard
     public void LevelCheck()
     {
         // to-do: which values are we using for score to level?
-        scoreCheck = false;
         if (score == 0)
         {
             level = 1;
@@ -48,6 +47,7 @@ internal class Scoreboard
             scoreMod = 2;
             //speed =
         }
+        scoreCheck = false;
     }
 
     public int ScoreUp(int scoreAdd)
