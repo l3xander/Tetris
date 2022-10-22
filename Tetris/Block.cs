@@ -184,7 +184,7 @@ internal class Block
         {
             for(int j = 0; j < size; j++)
             {
-                if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j] || gridPosY + size > 20)
+                if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j])
                 {
                     pos.Y -= singleSize;
                     return true;
