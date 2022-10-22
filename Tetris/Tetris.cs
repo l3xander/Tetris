@@ -9,6 +9,7 @@ public class Tetris : Game
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     private InputHelper inputHelper;
+    private Song music;
     private Texture2D sblock, titleScreen, endScreen, helpMenu;
     private Block[] allBlocks;
     SpriteFont roboto, robotoBold, silkscreen;
@@ -63,6 +64,9 @@ public class Tetris : Game
         silkscreen = Content.Load<SpriteFont>("Silkscreen");
         //music = Content.Load<Song>("tetrismusic");
 
+        MediaPlayer.IsRepeating = true;
+        MediaPlayer.Play(music);
+
         // continue this later: making screen size bigger
         // so both the game world and the scoreboard are visible
         // graphics.PreferredBackBufferWidth = grid.Width * 1.3f;
@@ -74,7 +78,7 @@ public class Tetris : Game
         inputHelper.Update(gameTime);
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || inputHelper.KeyPressed(Keys.Escape))
             Exit();
-
+            
         // opens/closes the help menu 
         if (inputHelper.KeyPressed(Keys.H) && !paused) paused = true;
         else if (inputHelper.KeyPressed(Keys.H) && paused) paused = false;
@@ -84,10 +88,11 @@ public class Tetris : Game
         {
             if (inputHelper.KeyPressed(Keys.Enter)) currentState = Gamestates.play;            
         }
-
+        
         //executes everything when game is in play mode
         else if (currentState == Gamestates.play)
         {
+      
             if (!currentBlock.finished(grid) && !paused)  
             { 
                 currentBlock.Move(gameTime, inputHelper, graphics); 
@@ -127,6 +132,7 @@ public class Tetris : Game
         }
 
         if (paused) spriteBatch.Draw(helpMenu, new Vector2(150, 30), Color.White);
+
         spriteBatch.End();
         base.Draw(gameTime);
     }
