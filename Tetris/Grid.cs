@@ -93,13 +93,12 @@ internal class Grid
     }
     public void IsLost()
     {
-             for (int x = 0; x <= gridWidth; x++)
+        for (int x = 0; x <= gridWidth; x++)
+        {
+            if (grid[x, gridHeight])
             {
-                if (grid[x, gridHeight])
-                {
-                    // gamestate = lost
-                    // zeg iets tegen het scoreboard
-                }
+                // gamestate = lost
+                // zeg iets tegen het scoreboard
             }
         }
     public void Place(Block pblock)

@@ -14,7 +14,6 @@ internal class Block
     public Color color;
     Texture2D spBlock;
     protected double timer, speed;
-    public bool finished;
 
     public Block(Texture2D sprite, double pspeed)
     {
@@ -22,7 +21,6 @@ internal class Block
         singleSize = spBlock.Width;        
         pos = new Vector2 (singleSize, 0);
         speed = pspeed;
-        finished = false;
     }
 
     public void Draw(SpriteBatch spBatch)
@@ -46,7 +44,12 @@ internal class Block
             pos.Y += singleSize;
             timer = 0;
         }
+        if (ip.KeyPressed(Keys.Space)) 
+        {
+            while(pos.Y < gr.PreferredBackBufferHeight-size*singleSize)pos.Y += singleSize;
+        }
 
+        //lets the player rotate and move the block from side to side
         if (ip.KeyPressed(Keys.D) && this.IsWithinlimits(Keys.D, pos.X + singleSize))
         {
             pos.X += singleSize;
@@ -166,19 +169,38 @@ internal class Block
             }
             rotateRight();
             return true; 
-
         }
 
         else return false;
     }
 
-    public void finish(Grid pgrid)
+    public bool finished(Grid pgrid)
     {
-        finished = true;
+        pos.Y += singleSize;
+        int gridPosX, gridPosY;
+        gridPosX = (int)this.pos.X / singleSize;
+        gridPosY = (int)this.pos.Y / singleSize;
+
+        for(int i = 0; i < size; i++)
+        {
+            for(int j = 0; j < size; j++)
+            {
+                if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j] || gridPosY + size > 20)
+                {
+                    pos.Y -= singleSize;
+                    return true;
+                }
+                
+            }
+        }
+        pos.Y -= singleSize;
+        return false;
     }
 
 
 }
+
+
 
 class BlockL : Block
 {   
@@ -187,7 +209,7 @@ class BlockL : Block
     {
         size = 4;
         array = new bool[size, size];
-        color = Color.BlueViolet;
+        color = new Color(95, 52, 64);
         //fill Array with block, dependent on type
         for (int i = 0; i < size; i++)
         {
@@ -195,7 +217,6 @@ class BlockL : Block
                 if (j == 0 || (j == 1 && i == 0)) array[i, j] = true;
                 else array[i, j] = false;
         }
-
     }
 }
 
@@ -206,7 +227,7 @@ class BlockR : Block
     {
         size = 4;
         array = new bool[size, size];
-        color = Color.BlueViolet;
+        color = new Color(121, 8, 28);
         
         for (int i = 0; i < size; i++)
         {
@@ -215,8 +236,6 @@ class BlockR : Block
                 else array[i, j] = false;
         }
     }
-
-
 }
 
 class BlockI : Block
@@ -226,8 +245,8 @@ class BlockI : Block
     {
         size = 4;
         array = new bool[size, size];
-        color = Color.BlueViolet;
-        
+        color = new Color(180, 2, 7);
+
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -244,7 +263,7 @@ class BlockO : Block
     {
         size = 2;
         array = new bool[size, size];
-        color = Color.BlueViolet;
+        color = new Color(70, 75, 35);
         //fill Array with block, dependent on type
         for (int i = 0; i < size; i++)
         {
@@ -263,7 +282,7 @@ class BlockS : Block
     {
         size = 3;
         array = new bool[size, size];
-        color = Color.BlueViolet;
+        color = new Color(251, 163, 14);
 
         for (int i = 0; i < size; i++)
         {
@@ -281,7 +300,7 @@ class Block2 : Block
     {
         size = 3;
         array = new bool[size, size];
-        color = Color.BlueViolet;
+        color = new Color(254, 99, 1);
 
         for (int i = 0; i < size; i++)
         {
@@ -299,7 +318,7 @@ class BlockT : Block
     {
         size = 3;
         array = new bool[size, size];
-        color = Color.BlueViolet;
+        color = new Color(44, 72, 39);
 
         for (int i = 0; i < size; i++)
         {
@@ -307,6 +326,5 @@ class BlockT : Block
                 if (j == 1 || (j == 0 && i == 1)) array[i, j] = true;
                 else array[i, j] = false;
         }
-
     }
 }
