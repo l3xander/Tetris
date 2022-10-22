@@ -103,6 +103,7 @@ public class Tetris : Game
                     timer = 0;
                 }
             }
+            //if game is lost set currentState = Gamestates.lost
         }
 
         else 
@@ -145,6 +146,5 @@ public class Tetris : Game
 
         return allBlocks[r.Next(7)];
     }
-
 
 }

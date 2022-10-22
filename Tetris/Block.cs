@@ -2,8 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-//using System.Windows.Forms;
+//using System;
 
 internal class Block
 {
@@ -188,8 +187,7 @@ internal class Block
                 {
                     pos.Y -= singleSize;
                     return true;
-                }
-                
+                }                
             }
         }
         pos.Y -= singleSize;
@@ -208,7 +206,7 @@ class BlockL : Block
     {
         size = 4;
         array = new bool[size, size];
-        color = new Color(95, 52, 64);
+        color = new Color(121, 70, 120);
         //fill Array with block, dependent on type
         for (int i = 0; i < size; i++)
         {
@@ -226,7 +224,7 @@ class BlockR : Block
     {
         size = 4;
         array = new bool[size, size];
-        color = new Color(121, 8, 28);
+        color = new Color(124, 6, 6);
         
         for (int i = 0; i < size; i++)
         {
@@ -244,7 +242,7 @@ class BlockI : Block
     {
         size = 4;
         array = new bool[size, size];
-        color = new Color(180, 2, 7);
+        color = new Color(190, 1, 4);
 
         for (int i = 0; i < size; i++)
         {
@@ -262,7 +260,7 @@ class BlockO : Block
     {
         size = 2;
         array = new bool[size, size];
-        color = new Color(70, 75, 35);
+        color = new Color(80, 98, 29);
         //fill Array with block, dependent on type
         for (int i = 0; i < size; i++)
         {
@@ -317,7 +315,7 @@ class BlockT : Block
     {
         size = 3;
         array = new bool[size, size];
-        color = new Color(44, 72, 39);
+        color = new Color(40, 84, 116);
 
         for (int i = 0; i < size; i++)
         {
