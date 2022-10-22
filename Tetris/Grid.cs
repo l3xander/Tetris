@@ -82,7 +82,7 @@ internal class Grid
                 {
                     color = colors[x,y];
                 }
-                spriteBatch.Draw(sprite, position, color);
+                spriteBatch.Draw(pblock.spBlock, position, color);
             }
         }
     }

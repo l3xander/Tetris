@@ -12,7 +12,7 @@ internal class Block
     public int singleSize;
     public Vector2 pos;
     public Color color;
-    Texture2D spBlock;
+    public Texture2D spBlock;
     protected double timer, speed;
     public bool finished;
 
