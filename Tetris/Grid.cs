@@ -101,26 +101,28 @@ internal class Grid
                 // zeg iets tegen het scoreboard
             }
         }
-    public void Place(Block pblock)
-    {
-        // figures out the block's position in the grid
-        int xGrid = (int)pblock.pos.X / pblock.singleSize;
-        int yGrid = (int)pblock.pos.Y / pblock.singleSize;
-
-        // checks which elements of the block array are true
-        for (int xBlock = 0; xBlock < pblock.size; xBlock++)
+    }
+        public void Place(Block pblock)
         {
-            for (int yBlock = 0; yBlock < pblock.size; yBlock++)
+            // figures out the block's position in the grid
+            int xGrid = (int)pblock.pos.X / pblock.singleSize;
+            int yGrid = (int)pblock.pos.Y / pblock.singleSize;
+
+            // checks which elements of the block array are true
+            for (int xBlock = 0; xBlock < pblock.size; xBlock++)
             {
-                if (pblock.array[xBlock, yBlock])
+                for (int yBlock = 0; yBlock < pblock.size; yBlock++)
                 {
-                    // places the block in the grid
-                    grid[xGrid+xBlock, yGrid+yBlock] = true;
-                    colors[xGrid+xBlock, yGrid+yBlock] = pblock.color;
+                    if (pblock.array[xBlock, yBlock])
+                    {
+                        // places the block in the grid
+                        grid[xGrid + xBlock, yGrid + yBlock] = true;
+                        colors[xGrid + xBlock, yGrid + yBlock] = pblock.color;
+                    }
                 }
             }
-        }   
+        }
     }
-}
+
 
 
