@@ -101,6 +101,7 @@ internal class Grid
                 // zeg iets tegen het scoreboard
             }
         }
+    }
     public void Place(Block pblock)
     {
         // figures out the block's position in the grid

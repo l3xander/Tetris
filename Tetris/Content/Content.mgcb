@@ -13,7 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-
 #begin helpMenu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -64,6 +63,18 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:tetrismusic.mp3
+
+#begin TetrisTitleScreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TetrisTitleScreen.png
 
 #begin TetrisTitleScreen.png
 /importer:TextureImporter

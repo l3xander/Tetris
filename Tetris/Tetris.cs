@@ -62,7 +62,7 @@ public class Tetris : Game
         roboto = Content.Load<SpriteFont>("Roboto");
         robotoBold = Content.Load<SpriteFont>("RobotoBold");
         silkscreen = Content.Load<SpriteFont>("Silkscreen");
-        //music = Content.Load<Song>("tetrismusic");
+        music = Content.Load<Song>("tetrismusic");
 
         MediaPlayer.IsRepeating = true;
         MediaPlayer.Play(music);

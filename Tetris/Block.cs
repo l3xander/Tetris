@@ -104,9 +104,6 @@ internal class Block
         }
         array = temp;
     }
-
-
-
     //checks if action a player wants to perform is within the grid, based on key being pressed & and the new x pos of the block
     private bool IsWithinlimits(Keys k, float xPos)
     {        
@@ -194,7 +191,6 @@ internal class Block
         pos.Y -= singleSize;
         return false;
     }
-
 
 }
 
