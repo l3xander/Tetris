@@ -47,6 +47,13 @@ internal class Scoreboard
             scoreMod = 2;
             //speed =
         }
+
+        if (score == 0) level = 1;
+        else if (score > 0 && score <= 100) level = 2;
+        else if (score > 100 && score <= 250) level = 3;
+        else if (score > 250 && score <= 400) level = 4;
+        else if (score > 400) level = 5;
+            
         scoreCheck = false;
     }
 
@@ -59,7 +66,6 @@ internal class Scoreboard
 
         return score;
     }
-
 
     // todo, check: is there a better way to get the fonts to scoreboard?
     public void Draw(SpriteBatch spriteBatch, SpriteFont roboto, SpriteFont robotoBold, SpriteFont Silkscreen)

@@ -7,11 +7,12 @@ using System;
 
 internal class Block
 {
-    protected bool [,] array;
-    protected int size, singleSize;
+    public bool[,] array;
+    public int size;
+    public int singleSize;
+    public Vector2 pos;
+    public Color color;
     Texture2D spBlock;
-    protected Color color;
-    protected Vector2 pos;
     protected double timer, speed;
     public bool finished;
 
