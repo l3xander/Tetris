@@ -120,6 +120,21 @@ public class Tetris : Game
                     {
                         Block tempBlock;
                         tempBlock = currentBlock;
+                        // checks if block doesn't go out of bounds
+                        if (nextBlock.size > currentBlock.size && currentBlock.pos.X > Grid.gridWidth * currentBlock.singleSize - nextBlock.singleSize * nextBlock.size)
+                        {
+                                for (int y = 0; y > currentBlock.size; y++)
+                                {
+                                    for (int x = 0; x > currentBlock.size; x++)
+                                    {
+                                        currentBlock.array[x, y] = currentBlock.array[x - (nextBlock.size - currentBlock.size), y];
+                                    }
+                                }
+                                currentBlock.pos.X -= currentBlock.singleSize * (nextBlock.size - currentBlock.size);
+                        }
+
+                        // swaps blocks
+                        
                         holdingBlock = currentBlock;
                         currentBlock = nextBlock;
                         nextBlock.pos = tempBlock.pos;
@@ -129,21 +144,35 @@ public class Tetris : Game
                     {
                         Block tempBlock;
                         tempBlock = currentBlock;
+                        // checks if block doesn't go out of bounds
+                        if (holdingBlock.size > currentBlock.size && currentBlock.pos.X > Grid.gridWidth * currentBlock.singleSize - holdingBlock.singleSize * holdingBlock.size)
+                        {
+                            for (int y = 0; y > currentBlock.size; y++)
+                            {
+                                for (int x = 0; x > currentBlock.size; x++)
+                                {
+                                    currentBlock.array[x, y] = currentBlock.array[x - (holdingBlock.size - currentBlock.size), y];
+                                }
+                            }
+                            currentBlock.pos.X -= currentBlock.singleSize * (holdingBlock.size - currentBlock.size);
+                        }
+                        // swaps blocks
                         currentBlock = holdingBlock;
-                        holdingBlock = tempBlock;
                         currentBlock.pos = tempBlock.pos;
+                        holdingBlock = tempBlock;
                     }
                 }
             }
             else if (!paused)
             {
-                grid.Update(currentBlock, scoreboard);
+                
 
                 //timer added so the block change isn't so abrupt
                 timer += gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (timer > 0.3)
                 {
+                    grid.Update(currentBlock, scoreboard);
                     placeSound.Play();
                     currentBlock = nextBlock;
                     nextBlock = randomBlock(currentSpeed);

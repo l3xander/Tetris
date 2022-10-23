@@ -20,8 +20,8 @@ internal class Scoreboard
     // calculates level
     public int GetLevel()
     {
-        int lvl1Bound = 100;
-        int lvl2Bound = 200;
+        int lvl1Bound = 6000;
+        int lvl2Bound = 15000;
 
         if (score == 0) level = 0;
         else if (score > 0 && score <= lvl1Bound)         level = 1;
@@ -151,7 +151,7 @@ internal class Scoreboard
 
         spriteBatch.DrawString(bungeeShade, "Tetris", 
         /* position, color      */  posTitle, titleColor,
-        /* rotation, origin     */  0, bungeeShade.MeasureString("Tetris") / 2, // sets origin to the middle of the text, so it will center in the middle
+        /* rotation, origin     */  0, bungeeShade.MeasureString("Tetris") / 2, // so it will center in the middle
         /* scale, effect, depth */  1, SpriteEffects.None, 0);
 
         spriteBatch.DrawString(inconsolata, "Score: "+score.ToString(), 
@@ -202,7 +202,7 @@ internal class Scoreboard
 
         spriteBatch.DrawString(inconsolata, "Your score: " + previousScore.ToString(),
                                     posEndScore, endColor,
-                                    0, inconsolata.MeasureString("Your score: " + previousScore.ToString()) / 2, // sets origin to the middle of the text, so it will center in the middle
+                                    0, inconsolata.MeasureString("Your score: " + previousScore.ToString()) / 2, // so it will center in the middle
                                     1, SpriteEffects.None, 0);
         if(highScore == previousScore) spriteBatch.DrawString(inconsolata, "That is also your best score!",
                                     posEndHighScore, endColor,

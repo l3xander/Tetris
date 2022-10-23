@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct2D1.Effects;
@@ -36,7 +35,6 @@ internal class Grid
     {
         bool rowIsFull;
         int amount = 0;
-        double timer = 0;
 
             // checks all rows
             for (int y = 0; y < gridHeight; y++)
@@ -71,18 +69,18 @@ internal class Grid
 
                     amount++;
                 }
-                // adds score
-                // rewards player if multiple rows are completed in one go
-                if (amount > 1)
-                {
-                    scoreboard.ScoreUp(130 * amount);
-                }
-
-                else if (amount == 1)
-                {
-                    scoreboard.ScoreUp(100);
-                }
+            // adds score
+            // rewards player if multiple rows are completed in one go
+            if (amount > 1)
+            {
+                scoreboard.ScoreUp(130 * amount);
             }
+
+            else if (amount == 1)
+            {
+                scoreboard.ScoreUp(100);
+            }
+        }
     }
     public void Draw(SpriteBatch spriteBatch, Block pblock)
     {
@@ -132,7 +130,7 @@ internal class Grid
         }
         return isLost;
     }
-        public void Place(Block pblock)
+    public void Place(Block pblock)
     {
         // figures out the block's position in the grid
         int xGrid = (int)pblock.pos.X / pblock.singleSize;
@@ -156,6 +154,7 @@ internal class Grid
     }
     
 }
+
 
 
 

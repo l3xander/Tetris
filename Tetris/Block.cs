@@ -8,8 +8,8 @@ internal class Block
 {
     public Vector2 pos;
     protected double timer, speed;
-    public Texture2D spBlock { get; }    
-    public bool[,] array { get; protected set; }
+    public Texture2D spBlock { get; }
+    public bool[,] array;
     public int size { get; protected set; }
     public int singleSize { get; protected set; }    
     public Color color { get; protected set; }
