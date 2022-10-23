@@ -38,8 +38,9 @@ internal class Block
     }
 
     //handles all movement; input and automatic downward moving
-    public void Move(GameTime gameTime, InputHelper ip, GraphicsDeviceManager gr, Scoreboard scoreboard)
+    public void Move(GameTime gameTime, InputHelper ip, GraphicsDeviceManager gr, Scoreboard scoreboard, Grid pgrid)
     {
+        
         timer += gameTime.ElapsedGameTime.TotalSeconds; 
         
         if (ip.KeyPressed(Keys.S))
@@ -55,12 +56,12 @@ internal class Block
         if (ip.KeyHeld(Keys.Space)) pos.Y += singleSize;
 
         //lets the player rotate and move the block from side to side
-        if (ip.KeyPressed(Keys.D) && this.IsWithinlimits(Keys.D, pos.X + singleSize))
+        if (ip.KeyPressed(Keys.D) && this.IsWithinlimits(Keys.D, pos.X + singleSize) && this.IsWithinGrid(pgrid, true))
         {
             pos.X += singleSize;
         }
 
-        if (ip.KeyPressed(Keys.A) && this.IsWithinlimits(Keys.A, pos.X-singleSize))
+        if (ip.KeyPressed(Keys.A) && this.IsWithinlimits(Keys.A, pos.X-singleSize) && this.IsWithinGrid(pgrid, false))
         {
             pos.X -= singleSize;
         }
@@ -177,6 +178,7 @@ internal class Block
         else return false;
     }
 
+    //checks if there is a block in the grid beneath the block
     public bool finished(Grid pgrid)
     {
         pos.Y += singleSize;
@@ -190,8 +192,8 @@ internal class Block
             {
                 if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j])
                 {
-                    pos.Y -= singleSize;
-                    return true;
+                 pos.Y -= singleSize;
+                 return true;
                 }                
             }
         }
@@ -199,6 +201,52 @@ internal class Block
         return false;
     }
 
+    //makes sure player can't horizontally move blocks into block in grid
+    public bool IsWithinGrid(Grid pgrid, bool right)
+    {
+        if (right) 
+        { 
+            pos.X += singleSize;
+            int gridPosX, gridPosY;
+            gridPosX = (int)this.pos.X / singleSize;
+            gridPosY = (int)this.pos.Y / singleSize;
+
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j])
+                    {
+                        pos.X -= singleSize;
+                        return false;
+                    }
+                }
+            }
+            pos.X -= singleSize;
+            return true;
+        }
+        else
+        {
+            pos.X -= singleSize;
+            int gridPosX, gridPosY;
+            gridPosX = (int)this.pos.X / singleSize;
+            gridPosY = (int)this.pos.Y / singleSize;
+
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j])
+                    {
+                        pos.X += singleSize;
+                        return false;
+                    }
+                }
+            }
+            pos.X += singleSize;
+            return true;
+        }
+    }
 }
 
 
@@ -208,7 +256,7 @@ class BlockL : Block
     public BlockL(Texture2D sprite, double pspeed)
         : base(sprite, pspeed)
     {
-        size = 4;
+        size = 3;
         array = new bool[size, size];
         color = new Color(121, 70, 120);
         //fill Array with block, dependent on type
@@ -216,7 +264,7 @@ class BlockL : Block
         {
             for (int j = 0; j < size; j++)
                 if (j == 0 || (j == 1 && i == 0)) array[i, j] = true;
-                else array[i, j] = false;
+                //else array[i, j] = false;
         }
     }
 }
@@ -226,7 +274,7 @@ class BlockR : Block
     public BlockR(Texture2D sprite, double pspeed)
         : base(sprite, pspeed)
     {
-        size = 4;
+        size = 3;
         array = new bool[size, size];
         color = new Color(124, 6, 6);
         

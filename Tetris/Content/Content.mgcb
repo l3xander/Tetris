@@ -32,6 +32,12 @@
 /processorParam:TextureFormat=Color
 /build:endScreen.png
 
+#begin gameOver.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:gameOver.wav
+
 #begin helpMenuC.png
 /importer:TextureImporter
 /processor:TextureProcessor

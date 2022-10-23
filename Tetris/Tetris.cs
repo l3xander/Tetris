@@ -13,8 +13,7 @@ public class Tetris : Game
     private Song music;
     private Texture2D sblock, titleScreen, endScreen, helpMenu;
     private Block[] allBlocks;
-    SoundEffect placeSound;    
-    SpriteFont inconsolata, inconsolataBold, bungeeShade;
+    SoundEffect placeSound, gameOver;    
     SpriteFont inconsolata, bungeeShade;
     enum Gamestates {welcome, play, lost};
     Gamestates currentState;
@@ -64,7 +63,9 @@ public class Tetris : Game
         helpMenu = Content.Load<Texture2D>("helpMenuC");
         endScreen = Content.Load<Texture2D>("endScreen");
 
+        // source of soundeffects: mixkit.co 
         placeSound = Content.Load<SoundEffect>("wood");
+        gameOver = Content.Load<SoundEffect>("gameOver");
 
         // source of fonts: fonts.google.com
         inconsolata = Content.Load<SpriteFont>("inconsolata");
@@ -90,7 +91,6 @@ public class Tetris : Game
         //handels welcome state
         if (currentState == Gamestates.welcome || currentState == Gamestates.lost)
         {
-            //MediaPlayer.Pause();
             grid.Reset();
             scoreboard.Reset();
             if (inputHelper.KeyPressed(Keys.Enter)) currentState = Gamestates.play;            
@@ -99,13 +99,13 @@ public class Tetris : Game
         //executes everything when game is in play mode
         else if (currentState == Gamestates.play)
         {
-            //MediaPlayer.Resume();
+            MediaPlayer.Resume();
             if (!currentBlock.finished(grid) && !paused)  
             {
                 // currentSpeed = scoreboard.Speed();
                 //currentBlock.speed =
                 //if (currentBlock.moved) scoreboard.ScoreUp(1);
-                currentBlock.Move(gameTime, inputHelper, graphics, scoreboard);
+                currentBlock.Move(gameTime, inputHelper, graphics, scoreboard, grid);
                 if (inputHelper.KeyPressed(Keys.C)){
                     if (holdingBlock == null)
                     {
@@ -144,6 +144,8 @@ public class Tetris : Game
 
                 if (grid.IsLost())
                 {
+                    MediaPlayer.Pause();
+                    gameOver.Play();
                     currentState = Gamestates.lost;
                 }
             }
