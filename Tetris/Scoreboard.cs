@@ -8,7 +8,7 @@ internal class Scoreboard
     public int score;
     int previousScore, highScore, level;
     bool highScoreVisible;
-    Vector2 posTitle, posScore, posHighScore, posLevel, posNextBlockText, posNextBlock, posHoldingText, posHoldingBlock, posEndScore, posEndHighScore;
+    Vector2 posTitle, posScore, posHighScore, posLevel, posNextBlockText, posNextBlock, posHoldingText, posHoldingBlock, posEndScore, posEndHighScore, posAccessHelp;
     Color textColor = new Color(85, 55, 55);
 
     // speed for block movement:
@@ -20,13 +20,13 @@ internal class Scoreboard
     // calculates level
     public int GetLevel()
     {
-        int lvl1Bound = 500;
-        int lvl2Bound = 1000;
+        int lvl1Bound = 100;
+        int lvl2Bound = 200;
 
         if (score == 0) level = 0;
-        else if (score > 0 && score <= lvl1Bound) level = 1;
+        else if (score > 0 && score <= lvl1Bound)         level = 1;
         else if (score > lvl1Bound && score <= lvl2Bound) level = 2;
-        else if (score > lvl2Bound) level = 3;
+        else if (score > lvl2Bound)                       level = 3;
 
         return level;
     }
@@ -76,14 +76,14 @@ internal class Scoreboard
         Color titleColor = new Color(0, 0, 0);
         double pR, pG, pB;
 
-        // handles the duration
-        // the % are added so it keeps looping, this avoids lots of if statements
+        // handles the looping
+        // the % are added so it keeps looping
         int duration = 10 * 1000;
         double fade = (gameTime.TotalGameTime.Seconds * 1000 + gameTime.TotalGameTime.Milliseconds) % duration;
         double colorFade = fade / duration * nextBlock.colorArray.Length % 1.0;
         
         // determines the color
-        // the % makes sure it doesn't go out of the array
+        // the % makes sure it loops through the array
         int index = (int)(fade / duration * nextBlock.colorArray.Length);
         int nextIndex = (index + 1) % nextBlock.colorArray.Length;
 
@@ -121,6 +121,8 @@ internal class Scoreboard
         posHoldingText.Y += 3 * nextBlock.singleSize;
         posHoldingBlock = posHoldingText;
         posHoldingBlock.Y += inconsolata.MeasureString("Text").Y;
+
+        posAccessHelp = new Vector2(screenWidth / 4 * 3, posHoldingBlock.Y+5*nextBlock.singleSize);
 
         posEndScore = new Vector2(screenWidth / 2, screenHeight / 5 * 4);
         posEndHighScore = posEndScore;
@@ -187,6 +189,11 @@ internal class Scoreboard
                                     0, Vector2.Zero,
                                     0.6f, SpriteEffects.None, 0);
         }
+
+        spriteBatch.DrawString(inconsolata, "Press H to access the help menu",
+                                    posAccessHelp, textColor,
+                                    0, inconsolata.MeasureString("Press H to access the help menu") / 2,
+                                    0.5f, SpriteEffects.None, 0);
     }
 
     public void DrawEndScore(SpriteBatch spriteBatch, SpriteFont inconsolata)

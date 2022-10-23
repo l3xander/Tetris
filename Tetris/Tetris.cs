@@ -74,7 +74,7 @@ public class Tetris : Game
 
         // source of music: bass cover by youtuber Davie504
         MediaPlayer.IsRepeating = true;
-        MediaPlayer.Play(music);
+        //MediaPlayer.Play(music);
 
     }
 
@@ -108,10 +108,10 @@ public class Tetris : Game
         //executes everything when game is in play mode
         else if (currentState == Gamestates.play)
         {
+            currentSpeed = scoreboard.GetSpeed();
             MediaPlayer.Resume();
             if (!currentBlock.finished(grid) && !paused)  
             {
-                currentSpeed = scoreboard.GetSpeed();
                 currentBlock.Move(gameTime, inputHelper, graphics, scoreboard, grid);
 
                 // allows for a block to be 'held' for extra strategy
@@ -137,7 +137,6 @@ public class Tetris : Game
             }
             else if (!paused)
             {
-                
                 grid.Update(currentBlock, scoreboard);
 
                 //timer added so the block change isn't so abrupt
@@ -159,12 +158,6 @@ public class Tetris : Game
                 }
             }
         }
-
-        else
-        {
-
-        }
-
         base.Update(gameTime);
     }
 
