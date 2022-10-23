@@ -74,7 +74,7 @@ public class Tetris : Game
 
         // source of music: bass cover by youtuber Davie504
         MediaPlayer.IsRepeating = true;
-        //MediaPlayer.Play(music);
+        MediaPlayer.Play(music);
 
     }
 
