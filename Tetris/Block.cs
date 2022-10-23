@@ -35,14 +35,20 @@ internal class Block
     }
 
     //handles all movement; input and automatic downward moving
-    public void Move(GameTime gameTime, InputHelper ip, GraphicsDeviceManager gr)
+    public void Move(GameTime gameTime, InputHelper ip, GraphicsDeviceManager gr, Scoreboard scoreboard)
     {
         timer += gameTime.ElapsedGameTime.TotalSeconds; 
-
+        
         if (ip.KeyPressed(Keys.S))
         {
+            scoreboard.ScoreUp(1);
             pos.Y += singleSize;
             timer = 0;
+        }
+        if (ip.KeyPressed(Keys.Space)) 
+        {
+            scoreboard.ScoreUp(1);
+            while (pos.Y < gr.PreferredBackBufferHeight-size*singleSize)pos.Y += singleSize;
         }
         if (ip.KeyHeld(Keys.Space)) pos.Y += singleSize;
 
@@ -67,6 +73,7 @@ internal class Block
 
         if (timer > speed)
         {
+            scoreboard.ScoreUp(1);
             pos.Y += singleSize;
             timer = 0;
         }

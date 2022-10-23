@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BungeeShade.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:BungeeShade.spritefont
 #begin ../../../../../../Desktop/Informatica/Game programeren/Tetris/helpMenu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -42,7 +48,7 @@
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Roboto.spritefont
+/build:Roboto.spritefont;Inconsolata.spritefont
 
 #begin RobotoBold.spritefont
 /importer:FontDescriptionImporter
