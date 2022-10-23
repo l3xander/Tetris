@@ -181,10 +181,9 @@ internal class Block
     //checks if there is a block in the grid beneath the block
     public bool finished(Grid pgrid)
     {
-        pos.Y += singleSize;
         int gridPosX, gridPosY;
         gridPosX = (int)this.pos.X / singleSize;
-        gridPosY = (int)this.pos.Y / singleSize;
+        gridPosY = (int)this.pos.Y / singleSize + 1;
 
         for(int i = 0; i < size; i++)
         {
@@ -192,12 +191,10 @@ internal class Block
             {
                 if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j])
                 {
-                 pos.Y -= singleSize;
                  return true;
                 }                
             }
         }
-        pos.Y -= singleSize;
         return false;
     }
 
@@ -206,9 +203,8 @@ internal class Block
     {
         if (right) 
         { 
-            pos.X += singleSize;
             int gridPosX, gridPosY;
-            gridPosX = (int)this.pos.X / singleSize;
+            gridPosX = (int)this.pos.X / singleSize + 1;
             gridPosY = (int)this.pos.Y / singleSize;
 
             for (int i = 0; i < size; i++)
@@ -217,19 +213,16 @@ internal class Block
                 {
                     if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j])
                     {
-                        pos.X -= singleSize;
                         return false;
                     }
                 }
             }
-            pos.X -= singleSize;
             return true;
         }
         else
         {
-            pos.X -= singleSize;
             int gridPosX, gridPosY;
-            gridPosX = (int)this.pos.X / singleSize;
+            gridPosX = (int)this.pos.X / singleSize - 1;
             gridPosY = (int)this.pos.Y / singleSize;
 
             for (int i = 0; i < size; i++)
@@ -238,12 +231,10 @@ internal class Block
                 {
                     if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j])
                     {
-                        pos.X += singleSize;
                         return false;
                     }
                 }
             }
-            pos.X += singleSize;
             return true;
         }
     }

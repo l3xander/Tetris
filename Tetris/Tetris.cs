@@ -129,7 +129,7 @@ public class Tetris : Game
             else if (!paused)
             {
                 
-                grid.Update(currentBlock, scoreboard);
+                grid.Update(currentBlock, scoreboard, gameTime);
 
                 //timer added so the block change isn't so abrupt
                 timer += gameTime.ElapsedGameTime.TotalSeconds;

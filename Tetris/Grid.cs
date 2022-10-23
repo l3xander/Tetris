@@ -8,6 +8,7 @@ internal class Grid
 {
     public const int gridWidth = 12;
     public const int gridHeight = 20;
+    public double timer;
     public bool[,] grid { get; private set; }
     Color[,] colors;
 
@@ -25,10 +26,11 @@ internal class Grid
         }
     }
 
-    public void Update(Block pblock, Scoreboard scoreboard)
+    public void Update(Block pblock, Scoreboard scoreboard, GameTime gameTime)
     {
         Place(pblock);
         RemoveLine(scoreboard);
+        timer = 0;
     }
     public void RemoveLine(Scoreboard scoreboard)
     {
