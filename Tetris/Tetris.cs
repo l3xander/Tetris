@@ -68,7 +68,7 @@ public class Tetris : Game
         gameOver = Content.Load<SoundEffect>("gameOver");
 
         // source of fonts: fonts.google.com
-        inconsolata = Content.Load<SpriteFont>("inconsolata");
+        inconsolata = Content.Load<SpriteFont>("Inconsolata");
         bungeeShade = Content.Load<SpriteFont>("BungeeShade");
         music = Content.Load<Song>("tetrismusic");
 
@@ -165,7 +165,11 @@ public class Tetris : Game
         spriteBatch.Begin();
 
         if (currentState == Gamestates.welcome) spriteBatch.Draw(titleScreen, Vector2.Zero, Color.White);
-        else if (currentState == Gamestates.lost) spriteBatch.Draw(endScreen, Vector2.Zero, Color.White);
+        else if (currentState == Gamestates.lost)
+        {
+            spriteBatch.Draw(endScreen, Vector2.Zero, Color.White);
+            scoreboard.DrawEndScore(spriteBatch, inconsolata);
+        }
         else
         {
             grid.Draw(spriteBatch, currentBlock);

@@ -7,7 +7,8 @@ internal class Scoreboard
 {
     int score, highScore, level;
     bool highScoreVisible;
-    Vector2 posTitle, posScore, posHighScore, posLevel, posNextBlockText, posNextBlock, posHoldingText, posHoldingBlock;
+    Vector2 posTitle, posScore, posHighScore, posLevel, posNextBlockText, posNextBlock, posHoldingText, posHoldingBlock, posEndScore, posEndHighScore;
+    Color textColor = new Color(85, 55, 55);
     public bool scoreCheck { get; private set; }
 
     // speed for block movement:
@@ -118,6 +119,10 @@ internal class Scoreboard
         posHoldingText.Y += nextBlock.size * nextBlock.singleSize;
         posHoldingBlock = posHoldingText;
         posHoldingBlock.Y += inconsolata.MeasureString("Text").Y;
+
+        posEndScore = new Vector2(graphics.PreferredBackBufferWidth / 5 * 4, graphics.PreferredBackBufferHeight / 2);
+        posEndHighScore = posEndScore;
+        posEndHighScore.Y += inconsolata.MeasureString("Text").Y;
     }
 
     // draws the blocks in the scoreboard
@@ -139,7 +144,6 @@ internal class Scoreboard
     {
         Color titleColor = TitleColor(gameTime, nextBlock);
         if (posTitle == Vector2.Zero) Positions(graphics, inconsolata, nextBlock);
-        Color textColor = new Color(85, 55, 55);
 
         spriteBatch.DrawString(bungeeShade, "Tetris", 
         /* position, color      */  posTitle, titleColor,
@@ -183,6 +187,17 @@ internal class Scoreboard
         }
     }
 
+    public void DrawEndScore(SpriteBatch spriteBatch, SpriteFont inconsolata)
+    {
+        spriteBatch.DrawString(inconsolata, "Your score: " + score.ToString(),
+                                    posEndScore, textColor,
+                                    0, inconsolata.MeasureString("Your score: " + score.ToString()) / 2, // sets origin to the middle of the text, so it will center in the middle
+                                    1, SpriteEffects.None, 0);
+        if (highScoreVisible) spriteBatch.DrawString(inconsolata, "Your best score: " + highScore.ToString(),
+                                    posEndHighScore, textColor,
+                                    0, inconsolata.MeasureString("Your best score: " + highScore.ToString()) / 2,
+                                    1, SpriteEffects.None, 0); ;
+    }
     public void Reset()
     {
         if(score > highScore)
