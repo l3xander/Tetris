@@ -11,7 +11,7 @@ internal class Block
     public Texture2D spBlock { get; }
     public bool[,] array;
     public int size { get; protected set; }
-    public int singleSize { get; protected set; }    
+    public int singleSize { get; protected set; }
     public Color color { get; protected set; }
     public Color[] colorArray { get; protected set; }
 
@@ -19,30 +19,30 @@ internal class Block
     public Block(Texture2D sprite, double pspeed)
     {
         spBlock = sprite;
-        singleSize = spBlock.Width;        
-        pos = new Vector2 (singleSize, 0);
+        singleSize = spBlock.Width;
+        pos = new Vector2(singleSize, 0);
         speed = pspeed;
-        colorArray = new Color[] { new Color(124, 6, 6), new Color(190, 1, 4), new Color(254, 99, 1), 
+        colorArray = new Color[] { new Color(124, 6, 6), new Color(190, 1, 4), new Color(254, 99, 1),
                                    new Color(251, 163, 14), new Color(80, 98, 29), new Color(40, 84, 116), new Color(121, 70, 120) };
     }
 
     public void Draw(SpriteBatch spBatch)
-    {        
+    {
         for (int i = 0; i < size; i++)
         {
-            for (int j = 0; j < size; j++) 
+            for (int j = 0; j < size; j++)
             {
-                if (array[i,j])spBatch.Draw(spBlock, new Vector2(pos.X + singleSize*i, pos.Y + singleSize*j), color);
-            } 
+                if (array[i, j]) spBatch.Draw(spBlock, new Vector2(pos.X + singleSize * i, pos.Y + singleSize * j), color);
+            }
         }
     }
 
     //handles all movement; input and automatic downward moving
     public void Move(GameTime gameTime, InputHelper ip, GraphicsDeviceManager gr, Scoreboard scoreboard, Grid pgrid)
     {
-        
-        timer += gameTime.ElapsedGameTime.TotalSeconds; 
-        
+
+        timer += gameTime.ElapsedGameTime.TotalSeconds;
+
         if (ip.KeyPressed(Keys.S))
         {
             pos.Y += singleSize;
@@ -61,7 +61,7 @@ internal class Block
             pos.X += singleSize;
         }
 
-        if (ip.KeyPressed(Keys.A) && this.IsWithinlimits(Keys.A, pos.X-singleSize) && this.IsWithinGrid(pgrid, false))
+        if (ip.KeyPressed(Keys.A) && this.IsWithinlimits(Keys.A, pos.X - singleSize) && this.IsWithinGrid(pgrid, false))
         {
             pos.X -= singleSize;
         }
@@ -85,16 +85,16 @@ internal class Block
     {
         //rotate block
 
-        bool[,] temp = new bool[size,size];
+        bool[,] temp = new bool[size, size];
 
-        for(int i = 0; i < size; i++) 
-        { 
-            for(int j = 0; j < size; j++)
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
             {
-                temp[size-1-j,i] = array[i,j];
+                temp[size - 1 - j, i] = array[i, j];
             }
         }
-        array = temp;        
+        array = temp;
     }
 
     public void rotateLeft()
@@ -107,19 +107,19 @@ internal class Block
         {
             for (int j = 0; j < size; j++)
             {
-                temp[i,j] = array[size - 1 - j, i];
+                temp[i, j] = array[size - 1 - j, i];
             }
         }
         array = temp;
     }
     //checks if action a player wants to perform is within the grid, based on key being pressed & and the new x pos of the block
     private bool IsWithinlimits(Keys k, float xPos)
-    {        
-        
-        if (k == Keys.A || k == Keys.D) 
-        { 
-        int limitL = 0;
-        int limitR = 12 * spBlock.Width - size * singleSize;
+    {
+
+        if (k == Keys.A || k == Keys.D)
+        {
+            int limitL = 0;
+            int limitR = 12 * spBlock.Width - size * singleSize;
             //when the first few rows in the arrays are empty they can go outside the screen
             for (int i = 0; i < size - 1; i++)
             {
@@ -154,7 +154,7 @@ internal class Block
         if (k == Keys.Right)
         {
             this.rotateRight();
-            if (!IsWithinlimits(Keys.D, pos.X))  
+            if (!IsWithinlimits(Keys.D, pos.X))
             {
                 rotateLeft();
                 return false;
@@ -172,7 +172,7 @@ internal class Block
                 return false;
             }
             rotateRight();
-            return true; 
+            return true;
         }
 
         else return false;
@@ -185,14 +185,14 @@ internal class Block
         gridPosX = (int)this.pos.X / singleSize;
         gridPosY = (int)this.pos.Y / singleSize + 1;
 
-        for(int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
         {
-            for(int j = 0; j < size; j++)
+            for (int j = 0; j < size; j++)
             {
                 if (array[i, j] && pgrid.grid[gridPosX + i, gridPosY + j])
                 {
-                 return true;
-                }                
+                    return true;
+                }
             }
         }
         return false;
@@ -201,8 +201,8 @@ internal class Block
     //makes sure player can't horizontally move blocks into block in grid
     public bool IsWithinGrid(Grid pgrid, bool right)
     {
-        if (right) 
-        { 
+        if (right)
+        {
             int gridPosX, gridPosY;
             gridPosX = (int)this.pos.X / singleSize + 1;
             gridPosY = (int)this.pos.Y / singleSize;
@@ -243,7 +243,7 @@ internal class Block
 
 
 class BlockL : Block
-{   
+{
     public BlockL(Texture2D sprite, double pspeed)
         : base(sprite, pspeed)
     {
@@ -255,7 +255,7 @@ class BlockL : Block
         {
             for (int j = 0; j < size; j++)
                 if (j == 0 || (j == 1 && i == 0)) array[i, j] = true;
-                //else array[i, j] = false;
+            //else array[i, j] = false;
         }
     }
 }
@@ -268,7 +268,7 @@ class BlockR : Block
         size = 3;
         array = new bool[size, size];
         color = new Color(124, 6, 6);
-        
+
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -327,7 +327,7 @@ class BlockS : Block
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
-                if ((j == 1 && i<2) || (j == 0 && i>0)) array[i, j] = true;
+                if ((j == 1 && i < 2) || (j == 0 && i > 0)) array[i, j] = true;
                 else array[i, j] = false;
         }
     }
@@ -345,7 +345,7 @@ class Block2 : Block
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
-                if ((j == 1 && i > 0 ) || (j == 0 &&  i < 2)) array[i, j] = true;
+                if ((j == 1 && i > 0) || (j == 0 && i < 2)) array[i, j] = true;
                 else array[i, j] = false;
         }
     }

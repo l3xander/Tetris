@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 public class Tetris : Game
 {
@@ -13,9 +13,9 @@ public class Tetris : Game
     private Song music;
     private Texture2D sblock, titleScreen, endScreen, helpMenu;
     private Block[] allBlocks;
-    SoundEffect placeSound, gameOver;    
+    SoundEffect placeSound, gameOver;
     SpriteFont inconsolata, bungeeShade;
-    enum Gamestates {welcome, play, lost};
+    enum Gamestates { welcome, play, lost };
     Gamestates currentState;
     Block nextBlock, currentBlock, holdingBlock;
     double currentSpeed, timer;
@@ -32,7 +32,7 @@ public class Tetris : Game
     }
 
     public Tetris()
-    {        
+    {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = false;
@@ -43,8 +43,8 @@ public class Tetris : Game
     {
         // window size
         sblock = Content.Load<Texture2D>("sprite");
-        graphics.PreferredBackBufferWidth = sblock.Width*Grid.gridWidth*2;
-        graphics.PreferredBackBufferHeight = sblock.Height*Grid.gridHeight;
+        graphics.PreferredBackBufferWidth = sblock.Width * Grid.gridWidth * 2;
+        graphics.PreferredBackBufferHeight = sblock.Height * Grid.gridHeight;
         graphics.ApplyChanges();
         base.Initialize();
     }
@@ -79,16 +79,16 @@ public class Tetris : Game
     }
 
     protected override void Update(GameTime gameTime)
-    {   
+    {
         inputHelper.Update(gameTime);
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || inputHelper.KeyPressed(Keys.Escape))
             Exit();
-            
+
         // opens/closes the help menu 
         if (inputHelper.KeyPressed(Keys.H) && !paused) paused = true;
         else if (inputHelper.KeyPressed(Keys.H) && paused) paused = false;
-        
-        if(currentState == Gamestates.lost)
+
+        if (currentState == Gamestates.lost)
         {
             grid.Reset();
             scoreboard.Reset();
@@ -104,18 +104,19 @@ public class Tetris : Game
                 currentState = Gamestates.play;
             }
         }
-        
+
         //executes everything when game is in play mode
         else if (currentState == Gamestates.play)
         {
             currentSpeed = scoreboard.GetSpeed();
             MediaPlayer.Resume();
-            if (!currentBlock.finished(grid) && !paused)  
+            if (!currentBlock.finished(grid) && !paused)
             {
                 currentBlock.Move(gameTime, inputHelper, graphics, scoreboard, grid);
 
                 // allows for a block to be 'held' for extra strategy
-                if (inputHelper.KeyPressed(Keys.C)){
+                if (inputHelper.KeyPressed(Keys.C))
+                {
                     if (holdingBlock == null)
                     {
                         Block tempBlock;
@@ -123,18 +124,18 @@ public class Tetris : Game
                         // checks if block doesn't go out of bounds
                         if (nextBlock.size > currentBlock.size && currentBlock.pos.X > Grid.gridWidth * currentBlock.singleSize - nextBlock.singleSize * nextBlock.size)
                         {
-                                for (int y = 0; y > currentBlock.size; y++)
+                            for (int y = 0; y > currentBlock.size; y++)
+                            {
+                                for (int x = 0; x > currentBlock.size; x++)
                                 {
-                                    for (int x = 0; x > currentBlock.size; x++)
-                                    {
-                                        currentBlock.array[x, y] = currentBlock.array[x - (nextBlock.size - currentBlock.size), y];
-                                    }
+                                    currentBlock.array[x, y] = currentBlock.array[x - (nextBlock.size - currentBlock.size), y];
                                 }
-                                currentBlock.pos.X -= currentBlock.singleSize * (nextBlock.size - currentBlock.size);
+                            }
+                            currentBlock.pos.X -= currentBlock.singleSize * (nextBlock.size - currentBlock.size);
                         }
 
                         // swaps blocks
-                        
+
                         holdingBlock = currentBlock;
                         currentBlock = nextBlock;
                         nextBlock.pos = tempBlock.pos;
@@ -165,14 +166,14 @@ public class Tetris : Game
             }
             else if (!paused)
             {
-                
+
 
                 //timer added so the block change isn't so abrupt
                 timer += gameTime.ElapsedGameTime.TotalSeconds;
 
                 if (timer > 0.3)
                 {
-                    grid.Update(currentBlock, scoreboard);
+                    grid.Update(currentBlock, scoreboard, gameTime);
                     placeSound.Play();
                     currentBlock = nextBlock;
                     nextBlock = randomBlock(currentSpeed);

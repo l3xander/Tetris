@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.Direct2D1.Effects;
 
 internal class Grid
 {
@@ -36,39 +34,39 @@ internal class Grid
         bool rowIsFull;
         int amount = 0;
 
-            // checks all rows
-            for (int y = 0; y < gridHeight; y++)
-            {
-                rowIsFull = true;
+        // checks all rows
+        for (int y = 0; y < gridHeight; y++)
+        {
+            rowIsFull = true;
 
-                // this loop stops at the first false it finds
-                for (int x = 0; x < gridWidth; x++)
+            // this loop stops at the first false it finds
+            for (int x = 0; x < gridWidth; x++)
+            {
+                if (!grid[x, y])
                 {
-                    if (!grid[x, y])
-                    {
-                        rowIsFull = false;
-                        break;
-                    }
+                    rowIsFull = false;
+                    break;
                 }
-                if (rowIsFull)
+            }
+            if (rowIsFull)
+            {
+                // copies all values of each row to the row below
+                for (int yDrop = y - 1; yDrop >= 0; yDrop--)
                 {
-                    // copies all values of each row to the row below
-                    for (int yDrop = y - 1; yDrop >= 0; yDrop--)
-                    {
-                        for (int xCopy = 0; xCopy < gridWidth; xCopy++)
-                        {
-                            grid[xCopy, yDrop + 1] = grid[xCopy, yDrop];
-                            colors[xCopy, yDrop + 1] = colors[xCopy, yDrop];
-                        }
-                    }
-                    // clears the top row (to false)
                     for (int xCopy = 0; xCopy < gridWidth; xCopy++)
                     {
-                        grid[xCopy, 0] = false;
+                        grid[xCopy, yDrop + 1] = grid[xCopy, yDrop];
+                        colors[xCopy, yDrop + 1] = colors[xCopy, yDrop];
                     }
-
-                    amount++;
                 }
+                // clears the top row (to false)
+                for (int xCopy = 0; xCopy < gridWidth; xCopy++)
+                {
+                    grid[xCopy, 0] = false;
+                }
+
+                amount++;
+            }
             // adds score
             // rewards player if multiple rows are completed in one go
             if (amount > 1)
@@ -100,7 +98,7 @@ internal class Grid
                 // if there is a block, it will use the corresponding color
                 if (grid[x, y])
                 {
-                    color = colors[x,y];
+                    color = colors[x, y];
                 }
                 spriteBatch.Draw(pblock.spBlock, position, color);
             }
@@ -152,7 +150,7 @@ internal class Grid
             }
         }
     }
-    
+
 }
 
 

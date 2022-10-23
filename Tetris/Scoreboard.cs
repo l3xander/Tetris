@@ -24,9 +24,9 @@ internal class Scoreboard
         int lvl2Bound = 15000;
 
         if (score == 0) level = 0;
-        else if (score > 0 && score <= lvl1Bound)         level = 1;
+        else if (score > 0 && score <= lvl1Bound) level = 1;
         else if (score > lvl1Bound && score <= lvl2Bound) level = 2;
-        else if (score > lvl2Bound)                       level = 3;
+        else if (score > lvl2Bound) level = 3;
 
         return level;
     }
@@ -41,11 +41,11 @@ internal class Scoreboard
             case 1:
                 speed = 1.5;
                 break;
-            case 2: 
-                speed = 1; 
+            case 2:
+                speed = 1;
                 break;
-            case 3: 
-                speed = 0.5; 
+            case 3:
+                speed = 0.5;
                 break;
         }
 
@@ -81,7 +81,7 @@ internal class Scoreboard
         int duration = 10 * 1000;
         double fade = (gameTime.TotalGameTime.Seconds * 1000 + gameTime.TotalGameTime.Milliseconds) % duration;
         double colorFade = fade / duration * nextBlock.colorArray.Length % 1.0;
-        
+
         // determines the color
         // the % makes sure it loops through the array
         int index = (int)(fade / duration * nextBlock.colorArray.Length);
@@ -112,17 +112,17 @@ internal class Scoreboard
         posScore = new Vector2(screenWidth / 4 * 3, screenHeight / 4);
         posHighScore = new Vector2(screenWidth / 4 * 3, screenHeight / 4 + inconsolata.MeasureString("Text").Y);
         posLevel = new Vector2(screenWidth / 4 * 3, screenHeight / 4 + 2 * inconsolata.MeasureString("Text").Y);
-        
+
         posNextBlockText = new Vector2(screenWidth / 20 * 11, screenHeight / 2 * 1);
         posNextBlock = new Vector2(posNextBlockText.X, posNextBlockText.Y + inconsolata.MeasureString("Text").Y); ;
-        
+
         // makes sure holdingBlock's position is relative to nextBlock's position
         posHoldingText = posNextBlock;
         posHoldingText.Y += 3 * nextBlock.singleSize;
         posHoldingBlock = posHoldingText;
         posHoldingBlock.Y += inconsolata.MeasureString("Text").Y;
 
-        posAccessHelp = new Vector2(screenWidth / 4 * 3, posHoldingBlock.Y+5*nextBlock.singleSize);
+        posAccessHelp = new Vector2(screenWidth / 4 * 3, posHoldingBlock.Y + 5 * nextBlock.singleSize);
 
         posEndScore = new Vector2(screenWidth / 2, screenHeight / 5 * 4);
         posEndHighScore = posEndScore;
@@ -149,19 +149,19 @@ internal class Scoreboard
         Color titleColor = TitleColor(gameTime, nextBlock);
         if (posTitle == Vector2.Zero) Positions(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, inconsolata, nextBlock);
 
-        spriteBatch.DrawString(bungeeShade, "Tetris", 
+        spriteBatch.DrawString(bungeeShade, "Tetris",
         /* position, color      */  posTitle, titleColor,
         /* rotation, origin     */  0, bungeeShade.MeasureString("Tetris") / 2, // so it will center in the middle
         /* scale, effect, depth */  1, SpriteEffects.None, 0);
 
-        spriteBatch.DrawString(inconsolata, "Score: "+score.ToString(), 
-                                    posScore, textColor, 
-                                    0, inconsolata.MeasureString("Score: "+score.ToString())/2, 
+        spriteBatch.DrawString(inconsolata, "Score: " + score.ToString(),
+                                    posScore, textColor,
+                                    0, inconsolata.MeasureString("Score: " + score.ToString()) / 2,
                                     1, SpriteEffects.None, 0);
 
-        if(highScoreVisible) spriteBatch.DrawString(inconsolata, "High score: " + highScore.ToString(), 
-                                    posHighScore, textColor, 
-                                    0, inconsolata.MeasureString("High score: " + highScore.ToString()) / 2, 
+        if (highScoreVisible) spriteBatch.DrawString(inconsolata, "High score: " + highScore.ToString(),
+                                    posHighScore, textColor,
+                                    0, inconsolata.MeasureString("High score: " + highScore.ToString()) / 2,
                                     1, SpriteEffects.None, 0);
 
         level = GetLevel();
@@ -182,7 +182,7 @@ internal class Scoreboard
 
         DrawBlocks(nextBlock, spriteBatch, posNextBlock);
         DrawBlocks(holdingBlock, spriteBatch, posHoldingBlock);
-        if(holdingBlock == null)
+        if (holdingBlock == null)
         {
             spriteBatch.DrawString(inconsolata, "None",
                                     posHoldingBlock, textColor,
@@ -204,14 +204,14 @@ internal class Scoreboard
                                     posEndScore, endColor,
                                     0, inconsolata.MeasureString("Your score: " + previousScore.ToString()) / 2, // so it will center in the middle
                                     1, SpriteEffects.None, 0);
-        if(highScore == previousScore) spriteBatch.DrawString(inconsolata, "That is also your best score!",
+        if (highScore == previousScore) spriteBatch.DrawString(inconsolata, "That is also your best score!",
                                     posEndHighScore, endColor,
                                     0, inconsolata.MeasureString("That is also your best score!") / 2,
                                     1, SpriteEffects.None, 0);
-                               else spriteBatch.DrawString(inconsolata, "Your best score: " + highScore.ToString(),
-                                    posEndHighScore, endColor,
-                                    0, inconsolata.MeasureString("Your best score: " + highScore.ToString()) / 2,
-                                    1, SpriteEffects.None, 0); ;
+        else spriteBatch.DrawString(inconsolata, "Your best score: " + highScore.ToString(),
+             posEndHighScore, endColor,
+             0, inconsolata.MeasureString("Your best score: " + highScore.ToString()) / 2,
+             1, SpriteEffects.None, 0); ;
     }
     public void Reset()
     {
@@ -223,6 +223,6 @@ internal class Scoreboard
             highScoreVisible = true;
         }
     }
-    
+
 }
 
