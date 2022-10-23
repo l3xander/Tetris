@@ -62,7 +62,7 @@ public class Tetris : Game
         endScreen = Content.Load<Texture2D>("endScreen");
 
         // source of fonts: fonts.google.com
-        inconsolata = Content.Load<SpriteFont>("inconsolata");
+        inconsolata = Content.Load<SpriteFont>("Inconsolata");
         bungeeShade = Content.Load<SpriteFont>("BungeeShade");
         music = Content.Load<Song>("tetrismusic");
 

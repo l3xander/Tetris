@@ -44,26 +44,12 @@
 /processorParam:TextureFormat=Color
 /build:helpMenuC.png
 
-#begin Roboto.spritefont
+#begin Inconsolata.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Roboto.spritefont;Inconsolata.spritefont
-
-#begin RobotoBold.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:RobotoBold.spritefont
-
-#begin Silkscreen.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Silkscreen.spritefont
+/build:Inconsolata.spritefont
 
 #begin sprite.png
 /importer:TextureImporter
