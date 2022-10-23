@@ -36,48 +36,53 @@ internal class Grid
     {
         bool rowIsFull;
         int amount = 0;
+        double timer = 0;
 
-        // checks all rows
-        for (int y = 0; y < gridHeight; y++)
-        {
-            rowIsFull = true;
+            // checks all rows
+            for (int y = 0; y < gridHeight; y++)
+            {
+                rowIsFull = true;
 
-            // this loop stops at the first false it finds
-            for (int x = 0; x < gridWidth; x++)
-            {
-                if (!grid[x, y])
+                // this loop stops at the first false it finds
+                for (int x = 0; x < gridWidth; x++)
                 {
-                    rowIsFull = false;
-                    break;
-                }
-            }
-            if (rowIsFull)
-            {
-                // copies all values of each row to the row below
-                for (int yDrop = y - 1; yDrop >= 0; yDrop--)
-                {
-                    for (int xCopy = 0; xCopy < gridWidth; xCopy++)
+                    if (!grid[x, y])
                     {
-                        grid[xCopy, yDrop + 1] = grid[xCopy, yDrop];
-                        colors[xCopy, yDrop + 1] = colors[xCopy, yDrop];
+                        rowIsFull = false;
+                        break;
                     }
                 }
-                // clears the top row (to false)
-                for (int xCopy = 0; xCopy < gridWidth; xCopy++)
+                if (rowIsFull)
                 {
-                    grid[xCopy, 0] = false;
+                    // copies all values of each row to the row below
+                    for (int yDrop = y - 1; yDrop >= 0; yDrop--)
+                    {
+                        for (int xCopy = 0; xCopy < gridWidth; xCopy++)
+                        {
+                            grid[xCopy, yDrop + 1] = grid[xCopy, yDrop];
+                            colors[xCopy, yDrop + 1] = colors[xCopy, yDrop];
+                        }
+                    }
+                    // clears the top row (to false)
+                    for (int xCopy = 0; xCopy < gridWidth; xCopy++)
+                    {
+                        grid[xCopy, 0] = false;
+                    }
+
+                    amount++;
+                }
+                // adds score
+                // rewards player if multiple rows are completed in one go
+                if (amount > 1)
+                {
+                    scoreboard.ScoreUp(130 * amount);
                 }
 
-                amount++;
+                else if (amount == 1)
+                {
+                    scoreboard.ScoreUp(100);
+                }
             }
-        }
-
-        // adds score
-        // rewards player if multiple rows are completed in one go
-        if (amount != 0)
-        {
-            scoreboard.ScoreUp(100 * amount);
-        }
     }
     public void Draw(SpriteBatch spriteBatch, Block pblock)
     {
@@ -149,6 +154,7 @@ internal class Grid
             }
         }
     }
+    
 }
 
 
