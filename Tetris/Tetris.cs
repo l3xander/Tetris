@@ -155,7 +155,11 @@ public class Tetris : Game
         spriteBatch.Begin();
 
         if (currentState == Gamestates.welcome) spriteBatch.Draw(titleScreen, Vector2.Zero, Color.White);
-        else if (currentState == Gamestates.lost) spriteBatch.Draw(endScreen, Vector2.Zero, Color.White);
+        else if (currentState == Gamestates.lost)
+        {
+            spriteBatch.Draw(endScreen, Vector2.Zero, Color.White);
+            scoreboard.DrawEndScore(spriteBatch, inconsolata);
+        }
         else
         {
             grid.Draw(spriteBatch, currentBlock);
