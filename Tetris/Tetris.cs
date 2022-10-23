@@ -12,7 +12,7 @@ public class Tetris : Game
     private Song music;
     private Texture2D sblock, titleScreen, endScreen, helpMenu;
     private Block[] allBlocks;
-    SpriteFont roboto, robotoBold, silkscreen;
+    SpriteFont inconsolata, inconsolataBold, bungeeShade;
     enum Gamestates {welcome, play, lost};
     Gamestates currentState;
     Block nextBlock, currentBlock;
@@ -40,8 +40,9 @@ public class Tetris : Game
     protected override void Initialize()
     {
         // window size
-        graphics.PreferredBackBufferWidth = currentBlock.singleSize*Grid.gridWidth*2;
-        graphics.PreferredBackBufferHeight = currentBlock.singleSize*Grid.gridHeight;
+        sblock = Content.Load<Texture2D>("sprite");
+        graphics.PreferredBackBufferWidth = sblock.Width*Grid.gridWidth*2;
+        graphics.PreferredBackBufferHeight = sblock.Height*Grid.gridHeight;
         graphics.ApplyChanges();
         base.Initialize();
     }
@@ -50,28 +51,25 @@ public class Tetris : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
         inputHelper = new InputHelper();
-        sblock = Content.Load<Texture2D>("sprite");
+        scoreboard = new Scoreboard();
         currentSpeed = 2;
         nextBlock = randomBlock(currentSpeed);
-        currentBlock = nextBlock;
+        currentBlock = randomBlock(currentSpeed);
         grid = new Grid();
-        scoreboard = new Scoreboard();
 
         titleScreen = Content.Load<Texture2D>("TetrisTitleScreen");
         helpMenu = Content.Load<Texture2D>("helpMenu");
         endScreen = Content.Load<Texture2D>("TetrisTitleScreen");
 
-        roboto = Content.Load<SpriteFont>("Roboto");
-        robotoBold = Content.Load<SpriteFont>("RobotoBold");
-        silkscreen = Content.Load<SpriteFont>("Silkscreen");
+        // source of fonts: fonts.google.com
+        inconsolata = Content.Load<SpriteFont>("inconsolata");
+        bungeeShade = Content.Load<SpriteFont>("BungeeShade");
         music = Content.Load<Song>("tetrismusic");
 
+        // source of music: bass cover by youtuber Davie504
         MediaPlayer.IsRepeating = true;
-        MediaPlayer.Play(music);
+        //MediaPlayer.Play(music);
 
-        // continue this later: making screen size bigger
-        // so both the game world and the scoreboard are visible
-        // graphics.PreferredBackBufferWidth = grid.Width * 1.3f;
     }
 
     protected override void Update(GameTime gameTime)
@@ -89,6 +87,7 @@ public class Tetris : Game
         {
             //MediaPlayer.Pause();
             grid.Reset();
+            scoreboard.Reset();
             if (inputHelper.KeyPressed(Keys.Enter)) currentState = Gamestates.play;            
         }
         
@@ -97,8 +96,11 @@ public class Tetris : Game
         {
             //MediaPlayer.Resume();
             if (!currentBlock.finished(grid) && !paused)  
-            { 
-                currentBlock.Move(gameTime, inputHelper, graphics); 
+            {
+                // currentSpeed = scoreboard.Speed();
+                //currentBlock.speed =
+                if (currentBlock.moved) scoreboard.ScoreUp(1);
+                currentBlock.Move(gameTime, inputHelper, graphics, scoreboard);
             }
             else if (!paused)
             {
@@ -125,7 +127,6 @@ public class Tetris : Game
 
         }
 
-
         base.Update(gameTime);
     }
 
@@ -140,7 +141,7 @@ public class Tetris : Game
         {
             grid.Draw(spriteBatch, currentBlock);
             currentBlock.Draw(spriteBatch);
-           // scoreboard.Draw(roboto, robotoBold, silkscreen);
+            scoreboard.Draw(spriteBatch, nextBlock, inconsolata, bungeeShade, graphics);
         }
 
         if (paused) spriteBatch.Draw(helpMenu, new Vector2(150, 30), Color.White);

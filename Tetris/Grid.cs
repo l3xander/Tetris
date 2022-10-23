@@ -121,13 +121,12 @@ internal class Grid
             if (grid[x, 0])
             {
                 return isLost = true;
-                // zeg iets tegen het scoreboard
             }
         }
         return isLost;
     }
         public void Place(Block pblock)
-        {
+    {
         // figures out the block's position in the grid
         int xGrid = (int)pblock.pos.X / pblock.singleSize;
         int yGrid = (int)pblock.pos.Y / pblock.singleSize;

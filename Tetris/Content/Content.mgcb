@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BungeeShade.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:BungeeShade.spritefont
 
 #begin helpMenu.png
 /importer:TextureImporter
@@ -31,7 +37,7 @@
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Roboto.spritefont
+/build:Roboto.spritefont;Inconsolata.spritefont
 
 #begin RobotoBold.spritefont
 /importer:FontDescriptionImporter
