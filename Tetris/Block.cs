@@ -6,13 +6,14 @@ using Microsoft.Xna.Framework.Input;
 
 internal class Block
 {
-    public bool[,] array;
-    public int size;
-    public int singleSize;
     public Vector2 pos;
-    public Color color;
-    public Texture2D spBlock;
     protected double timer, speed;
+    public Texture2D spBlock { get; }    
+    public bool[,] array { get; protected set; }
+    public int size { get; protected set; }
+    public int singleSize { get; protected set; }    
+    public Color color { get; protected set; }
+
 
     public Block(Texture2D sprite, double pspeed)
     {
@@ -43,10 +44,7 @@ internal class Block
             pos.Y += singleSize;
             timer = 0;
         }
-        if (ip.KeyPressed(Keys.Space)) 
-        {
-            while(pos.Y < gr.PreferredBackBufferHeight-size*singleSize)pos.Y += singleSize;
-        }
+        if (ip.KeyHeld(Keys.Space)) pos.Y += singleSize;
 
         //lets the player rotate and move the block from side to side
         if (ip.KeyPressed(Keys.D) && this.IsWithinlimits(Keys.D, pos.X + singleSize))

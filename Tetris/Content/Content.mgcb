@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin helpMenu.png
+#begin ../../../../../../Desktop/Informatica/Game programeren/Tetris/helpMenu.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,7 +23,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:helpMenu.png
+/build:../../../../../../Desktop/Informatica/Game programeren/Tetris/helpMenu.png;helpMenu.png
+
+#begin endScreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:endScreen.png
 
 #begin Roboto.spritefont
 /importer:FontDescriptionImporter
@@ -63,18 +75,6 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:tetrismusic.mp3
-
-#begin TetrisTitleScreen.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TetrisTitleScreen.png
 
 #begin TetrisTitleScreen.png
 /importer:TextureImporter

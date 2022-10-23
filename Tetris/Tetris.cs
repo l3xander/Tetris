@@ -40,8 +40,8 @@ public class Tetris : Game
     protected override void Initialize()
     {
         // window size
-        graphics.PreferredBackBufferWidth = currentBlock.singleSize*Grid.gridWidth*2;
-        graphics.PreferredBackBufferHeight = currentBlock.singleSize*Grid.gridHeight;
+        graphics.PreferredBackBufferWidth = 30*Grid.gridWidth*2;
+        graphics.PreferredBackBufferHeight = 30*Grid.gridHeight;
         graphics.ApplyChanges();
         base.Initialize();
     }
@@ -59,7 +59,7 @@ public class Tetris : Game
 
         titleScreen = Content.Load<Texture2D>("TetrisTitleScreen");
         helpMenu = Content.Load<Texture2D>("helpMenu");
-        endScreen = Content.Load<Texture2D>("TetrisTitleScreen");
+        endScreen = Content.Load<Texture2D>("endScreen");
 
         roboto = Content.Load<SpriteFont>("Roboto");
         robotoBold = Content.Load<SpriteFont>("RobotoBold");
