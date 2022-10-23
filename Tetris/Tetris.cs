@@ -87,13 +87,22 @@ public class Tetris : Game
         // opens/closes the help menu 
         if (inputHelper.KeyPressed(Keys.H) && !paused) paused = true;
         else if (inputHelper.KeyPressed(Keys.H) && paused) paused = false;
+        
+        if(currentState == Gamestates.lost)
+        {
+            grid.Reset();
+            scoreboard.Reset();
+        }
 
         //handels welcome state
         if (currentState == Gamestates.welcome || currentState == Gamestates.lost)
         {
-            grid.Reset();
-            scoreboard.Reset();
-            if (inputHelper.KeyPressed(Keys.Enter)) currentState = Gamestates.play;            
+            //MediaPlayer.Pause();
+            if (inputHelper.KeyPressed(Keys.Enter))
+            {
+                scoreboard.score = 0;
+                currentState = Gamestates.play;
+            }
         }
         
         //executes everything when game is in play mode
@@ -102,10 +111,10 @@ public class Tetris : Game
             MediaPlayer.Resume();
             if (!currentBlock.finished(grid) && !paused)  
             {
-                // currentSpeed = scoreboard.Speed();
-                //currentBlock.speed =
-                //if (currentBlock.moved) scoreboard.ScoreUp(1);
+                currentSpeed = scoreboard.GetSpeed();
                 currentBlock.Move(gameTime, inputHelper, graphics, scoreboard, grid);
+
+                // allows for a block to be 'held' for extra strategy
                 if (inputHelper.KeyPressed(Keys.C)){
                     if (holdingBlock == null)
                     {

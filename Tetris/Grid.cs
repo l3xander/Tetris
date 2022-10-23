@@ -68,13 +68,17 @@ internal class Grid
 
                 amount++;
             }
-        }
+            // adds score
+            // rewards player if multiple rows are completed in one go
+            if (amount > 1)
+            {
+                scoreboard.ScoreUp(130 * amount);
+            }
 
-        // adds score
-        // rewards player if multiple rows are completed in one go
-        if (amount != 0)
-        {
-            scoreboard.ScoreUp(100 * amount);
+            else if (amount == 1)
+            {
+                scoreboard.ScoreUp(100);
+            }
         }
     }
     public void Draw(SpriteBatch spriteBatch, Block pblock)
@@ -147,6 +151,7 @@ internal class Grid
             }
         }
     }
+    
 }
 
 

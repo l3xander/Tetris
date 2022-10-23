@@ -45,15 +45,15 @@ internal class Block
         
         if (ip.KeyPressed(Keys.S))
         {
-            scoreboard.ScoreUp(1);
             pos.Y += singleSize;
+            scoreboard.ScoreUp(10);
             timer = 0;
         }
-        if (ip.KeyPressed(Keys.Space)) 
+        if (ip.KeyHeld(Keys.Space))
         {
-            scoreboard.ScoreUp(1);            
+            pos.Y += singleSize;
+            scoreboard.ScoreUp(10);
         }
-        if (ip.KeyHeld(Keys.Space)) pos.Y += singleSize;
 
         //lets the player rotate and move the block from side to side
         if (ip.KeyPressed(Keys.D) && this.IsWithinlimits(Keys.D, pos.X + singleSize) && this.IsWithinGrid(pgrid, true))
@@ -76,8 +76,8 @@ internal class Block
 
         if (timer > speed)
         {
-            scoreboard.ScoreUp(1);
             pos.Y += singleSize;
+            scoreboard.ScoreUp(10);
             timer = 0;
         }
     }
