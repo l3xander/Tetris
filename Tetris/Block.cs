@@ -47,8 +47,7 @@ internal class Block
         }
         if (ip.KeyPressed(Keys.Space)) 
         {
-            scoreboard.ScoreUp(1);
-            while (pos.Y < gr.PreferredBackBufferHeight-size*singleSize)pos.Y += singleSize;
+            scoreboard.ScoreUp(1);            
         }
         if (ip.KeyHeld(Keys.Space)) pos.Y += singleSize;
 

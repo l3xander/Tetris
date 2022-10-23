@@ -58,7 +58,7 @@ public class Tetris : Game
         grid = new Grid();
 
         titleScreen = Content.Load<Texture2D>("TetrisTitleScreen");
-        helpMenu = Content.Load<Texture2D>("helpMenu");
+        helpMenu = Content.Load<Texture2D>("helpMenuC");
         endScreen = Content.Load<Texture2D>("endScreen");
 
         // source of fonts: fonts.google.com
@@ -68,7 +68,7 @@ public class Tetris : Game
 
         // source of music: bass cover by youtuber Davie504
         MediaPlayer.IsRepeating = true;
-        //MediaPlayer.Play(music);
+        MediaPlayer.Play(music);
 
     }
 
@@ -99,7 +99,7 @@ public class Tetris : Game
             {
                 // currentSpeed = scoreboard.Speed();
                 //currentBlock.speed =
-                if (currentBlock.moved) scoreboard.ScoreUp(1);
+                //if (currentBlock.moved) scoreboard.ScoreUp(1);
                 currentBlock.Move(gameTime, inputHelper, graphics, scoreboard);
             }
             else if (!paused)
@@ -132,7 +132,7 @@ public class Tetris : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.White);
+        GraphicsDevice.Clear(new Color(188, 137, 106));
         spriteBatch.Begin();
 
         if (currentState == Gamestates.welcome) spriteBatch.Draw(titleScreen, Vector2.Zero, Color.White);
