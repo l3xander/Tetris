@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
 using System;
+using Microsoft.Xna.Framework.Audio;
 
 public class Tetris : Game
 {
@@ -12,6 +13,7 @@ public class Tetris : Game
     private Song music;
     private Texture2D sblock, titleScreen, endScreen, helpMenu;
     private Block[] allBlocks;
+    SoundEffect placeSound;    
     SpriteFont inconsolata, inconsolataBold, bungeeShade;
     enum Gamestates {welcome, play, lost};
     Gamestates currentState;
@@ -61,6 +63,8 @@ public class Tetris : Game
         helpMenu = Content.Load<Texture2D>("helpMenuC");
         endScreen = Content.Load<Texture2D>("endScreen");
 
+        placeSound = Content.Load<SoundEffect>("wood");
+
         // source of fonts: fonts.google.com
         inconsolata = Content.Load<SpriteFont>("inconsolata");
         bungeeShade = Content.Load<SpriteFont>("BungeeShade");
@@ -104,12 +108,15 @@ public class Tetris : Game
             }
             else if (!paused)
             {
+                
                 grid.Update(currentBlock, scoreboard);
 
                 //timer added so the block change isn't so abrupt
                 timer += gameTime.ElapsedGameTime.TotalSeconds;
+
                 if (timer > 0.3)
                 {
+                    placeSound.Play();
                     currentBlock = nextBlock;
                     nextBlock = randomBlock(currentSpeed);
                     timer = 0;
