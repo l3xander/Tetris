@@ -15,9 +15,10 @@ public class Tetris : Game
     private Block[] allBlocks;
     SoundEffect placeSound;    
     SpriteFont inconsolata, inconsolataBold, bungeeShade;
+    SpriteFont inconsolata, bungeeShade;
     enum Gamestates {welcome, play, lost};
     Gamestates currentState;
-    Block nextBlock, currentBlock;
+    Block nextBlock, currentBlock, holdingBlock;
     double currentSpeed, timer;
     Grid grid;
     Scoreboard scoreboard;
@@ -105,6 +106,25 @@ public class Tetris : Game
                 //currentBlock.speed =
                 //if (currentBlock.moved) scoreboard.ScoreUp(1);
                 currentBlock.Move(gameTime, inputHelper, graphics, scoreboard);
+                if (inputHelper.KeyPressed(Keys.C)){
+                    if (holdingBlock == null)
+                    {
+                        Block tempBlock;
+                        tempBlock = currentBlock;
+                        holdingBlock = currentBlock;
+                        currentBlock = nextBlock;
+                        nextBlock.pos = tempBlock.pos;
+                        nextBlock = randomBlock(currentSpeed);
+                    }
+                    else
+                    {
+                        Block tempBlock;
+                        tempBlock = currentBlock;
+                        currentBlock = holdingBlock;
+                        holdingBlock = tempBlock;
+                        currentBlock.pos = tempBlock.pos;
+                    }
+                }
             }
             else if (!paused)
             {
@@ -148,7 +168,7 @@ public class Tetris : Game
         {
             grid.Draw(spriteBatch, currentBlock);
             currentBlock.Draw(spriteBatch);
-            scoreboard.Draw(spriteBatch, nextBlock, inconsolata, bungeeShade, graphics);
+            scoreboard.Draw(spriteBatch, nextBlock, holdingBlock, inconsolata, bungeeShade, graphics, gameTime);
         }
 
         if (paused) spriteBatch.Draw(helpMenu, new Vector2(150, 30), Color.White);
