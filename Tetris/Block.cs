@@ -13,6 +13,7 @@ internal class Block
     public int size { get; protected set; }
     public int singleSize { get; protected set; }    
     public Color color { get; protected set; }
+    public Color[] colorArray { get; protected set; }
 
 
     public Block(Texture2D sprite, double pspeed)
@@ -21,6 +22,8 @@ internal class Block
         singleSize = spBlock.Width;        
         pos = new Vector2 (singleSize, 0);
         speed = pspeed;
+        colorArray = new Color[] { new Color(124, 6, 6), new Color(190, 1, 4), new Color(254, 99, 1), 
+                                   new Color(251, 163, 14), new Color(80, 98, 29), new Color(40, 84, 116), new Color(121, 70, 120) };
     }
 
     public void Draw(SpriteBatch spBatch)
