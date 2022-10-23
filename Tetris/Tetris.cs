@@ -18,6 +18,7 @@ public class Tetris : Game
     Block nextBlock, currentBlock;
     double currentSpeed, timer;
     Grid grid;
+    Scoreboard scoreboard;
     public bool paused;
 
     [STAThread]
@@ -39,8 +40,8 @@ public class Tetris : Game
     protected override void Initialize()
     {
         // window size
-        graphics.PreferredBackBufferWidth = 30*24;
-        graphics.PreferredBackBufferHeight = 30*20;
+        graphics.PreferredBackBufferWidth = currentBlock.singleSize*Grid.gridWidth*2;
+        graphics.PreferredBackBufferHeight = currentBlock.singleSize*Grid.gridHeight;
         graphics.ApplyChanges();
         base.Initialize();
     }
@@ -54,6 +55,7 @@ public class Tetris : Game
         nextBlock = randomBlock(currentSpeed);
         currentBlock = nextBlock;
         grid = new Grid();
+        scoreboard = new Scoreboard();
 
         titleScreen = Content.Load<Texture2D>("TetrisTitleScreen");
         helpMenu = Content.Load<Texture2D>("helpMenu");
@@ -70,7 +72,6 @@ public class Tetris : Game
         // continue this later: making screen size bigger
         // so both the game world and the scoreboard are visible
         // graphics.PreferredBackBufferWidth = grid.Width * 1.3f;
-
     }
 
     protected override void Update(GameTime gameTime)
@@ -86,19 +87,23 @@ public class Tetris : Game
         //handels welcome state
         if (currentState == Gamestates.welcome || currentState == Gamestates.lost)
         {
+            //MediaPlayer.Pause();
+            grid.Reset();
             if (inputHelper.KeyPressed(Keys.Enter)) currentState = Gamestates.play;            
         }
         
         //executes everything when game is in play mode
         else if (currentState == Gamestates.play)
         {
-      
+            //MediaPlayer.Resume();
             if (!currentBlock.finished(grid) && !paused)  
             { 
                 currentBlock.Move(gameTime, inputHelper, graphics); 
             }
             else if (!paused)
             {
+                grid.Update(currentBlock, scoreboard);
+
                 //timer added so the block change isn't so abrupt
                 timer += gameTime.ElapsedGameTime.TotalSeconds;
                 if (timer > 0.3)
@@ -107,11 +112,18 @@ public class Tetris : Game
                     nextBlock = randomBlock(currentSpeed);
                     timer = 0;
                 }
+
+                if (grid.IsLost())
+                {
+                    currentState = Gamestates.lost;
+                }
             }
-            //if game is lost set currentState = Gamestates.lost
         }
 
-        else 
+        else
+        {
+
+        }
 
 
         base.Update(gameTime);
@@ -126,10 +138,9 @@ public class Tetris : Game
         else if (currentState == Gamestates.lost) spriteBatch.Draw(endScreen, Vector2.Zero, Color.White);
         else
         {
+            grid.Draw(spriteBatch, currentBlock);
             currentBlock.Draw(spriteBatch);
-
-            // grid.Draw("block");
-            // Scoreboard.Draw(roboto, robotoBold, silkscreen);
+           // scoreboard.Draw(roboto, robotoBold, silkscreen);
         }
 
         if (paused) spriteBatch.Draw(helpMenu, new Vector2(150, 30), Color.White);

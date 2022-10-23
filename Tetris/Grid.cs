@@ -6,26 +6,34 @@ using SharpDX.Direct2D1.Effects;
 
 internal class Grid
 {
-    const int gridWidth = 12;
-    const int gridHeight = 21;
+    public const int gridWidth = 12;
+    public const int gridHeight = 20;
     public bool[,] grid { get; private set; }
     Color[,] colors;
 
     public Grid()
     {
-        grid = new bool[gridWidth, gridHeight];
+        grid = new bool[gridWidth, gridHeight + 1];
         colors = new Color[gridWidth, gridHeight];
+
+        // the +1 is added to make a non-visible row
+        // of which all elements will be set to 'true' in the following code
+        // this makes it more intuitive to place blocks at the bottom of the grid
+        for (int x = 0; x < gridWidth; x++)
+        {
+            grid[x, gridHeight] = true;
+        }
     }
 
-    // todo: aan de onderkant een extra rij en die op true
-
-    public void Update()
+    public void Update(Block pblock, Scoreboard scoreboard)
     {
-        // todo: game states
+        Place(pblock);
+        RemoveLine(scoreboard);
     }
-    public void RemoveLine()
+    public void RemoveLine(Scoreboard scoreboard)
     {
         bool rowIsFull;
+        int amount = 0;
 
         // checks all rows
         for (int y = 0; y < gridHeight; y++)
@@ -41,7 +49,6 @@ internal class Grid
                     break;
                 }
             }
-
             if (rowIsFull)
             {
                 // copies all values of each row to the row below
@@ -59,10 +66,16 @@ internal class Grid
                     grid[xCopy, 0] = false;
                 }
 
-                //ScoreUp(100);
+                amount++;
             }
         }
-        // todo: communicate this to scoreboard
+
+        // adds score
+        // rewards player if multiple rows are completed in one go
+        if (amount != 0)
+        {
+            scoreboard.ScoreUp(100 * amount);
+        }
     }
     public void Draw(SpriteBatch spriteBatch, Block pblock)
     {
@@ -74,10 +87,12 @@ internal class Grid
         {
             for (int y = 0; y < gridHeight; y++)
             {
+                // draws the grid or the "background"
                 color = Color.White;
                 position.X = x * pblock.singleSize;
                 position.Y = y * pblock.singleSize;
 
+                // if there is a block, it will use the corresponding color
                 if (grid[x, y])
                 {
                     color = colors[x,y];
@@ -88,22 +103,31 @@ internal class Grid
     }
     public void Reset()
     {
-        grid = new bool[gridWidth, gridHeight];
+        // sets all elements of the grid to false
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int y = 0; y < gridHeight; y++)
+            {
+                grid[x, y] = false;
+            }
+        }
         colors = new Color[gridWidth, gridHeight];
     }
-    public void IsLost()
+    public bool IsLost()
     {
-        for (int x = 0; x <= gridWidth; x++)
+        bool isLost = false;
+        for (int x = 0; x < gridWidth; x++)
         {
-            if (grid[x, gridHeight])
+            if (grid[x, 0])
             {
-                // gamestate = lost
+                return isLost = true;
                 // zeg iets tegen het scoreboard
             }
         }
+        return isLost;
     }
-    public void Place(Block pblock)
-    {
+        public void Place(Block pblock)
+        {
         // figures out the block's position in the grid
         int xGrid = (int)pblock.pos.X / pblock.singleSize;
         int yGrid = (int)pblock.pos.Y / pblock.singleSize;
@@ -116,12 +140,15 @@ internal class Grid
                 if (pblock.array[xBlock, yBlock])
                 {
                     // places the block in the grid
-                    grid[xGrid+xBlock, yGrid+yBlock] = true;
-                    colors[xGrid+xBlock, yGrid+yBlock] = pblock.color;
+                    grid[xGrid + xBlock, yGrid + yBlock] = true;
+
+                    // saves the color the block had
+                    colors[xGrid + xBlock, yGrid + yBlock] = pblock.color;
                 }
             }
-        }   
+        }
     }
 }
+
 
 
